@@ -1,0 +1,14 @@
+.vscode
+public
+node_modules
+npm-debug.log
+.idea
+dist
+yarn-error.log
+coverage
+logs
+.awcache
+.DS_Store
+junit.xml
+.v8flags.*.json
+ts-node-*
