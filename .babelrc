@@ -1,0 +1,18 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "modules": false,
+        "targets": { "browsers": ["last 2 versions", "ie >= 11"] }
+      }
+    ],
+    "react"
+  ],
+  "plugins": [["import", { "libraryName": "antd", "style": false }]],
+  "env": {
+    "development": {
+      "plugins": ["react-hot-loader/babel"]
+    }
+  }
+}

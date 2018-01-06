@@ -1,0 +1,15 @@
+{
+  "extends": ["tslint-config-airbnb", "tslint-react", "tslint:latest"],
+  "rules": {
+    "quotemark": [true, "single", "jsx-double"],
+    "no-implicit-dependencies": false,
+    "no-trailing-whitespace": [true, "ignore-template-strings"],
+    "ordered-imports": false,
+    "import-name": false,
+    "no-submodule-imports": [true, "lodash/fp"],
+    "arrow-parens": false,
+    "object-literal-sort-keys": false,
+    "ter-arrow-parens": false,
+    "member-access": false
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist/",
+    "target": "es6",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "es6",
+    "moduleResolution": "node",
+    "alwaysStrict": false,
+    "allowJs": false,
+    "jsx": "preserve",
+    "lib": [
+      "es6",
+      "es7",
+      "dom"
+    ],
+    "paths": {
+      "utils": [
+        "./src/utils"
+      ],
+      "models": [
+        "./src/models"
+      ]
+    }
+  },
+  "awesomeTypescriptLoaderOptions": {
+    "useBabel": true,
+    "useCache": true
+  },
+  "include": [
+    "src",
+    "typings"
+  ]
+}

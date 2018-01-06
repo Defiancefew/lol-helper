@@ -1,0 +1,7 @@
+{
+  "verbose": true,
+  "watch": ["src/server"],
+  "ext": "ts",
+  "exec":
+    "ts-node --pollingInterval 1000 --compilerOptions '{\"module\":\"commonjs\", \"target\":\"es5\", \"allowSyntheticDefaultImports\":true,\"moduleResolution\":\"node\"}' ./src/server/index.ts"
+}
