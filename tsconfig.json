@@ -22,6 +22,9 @@
       ],
       "models": [
         "./src/models"
+      ],
+      "static": [
+        "./src/static"
       ]
     }
   },
