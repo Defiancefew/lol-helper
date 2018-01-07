@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { IStore } from 'models';
 import { Input, Button } from 'antd';
+import styled from 'styled-components';
 import { checkKey } from '../actions';
-import { AuthFormWrapper } from './';
+import { Icon } from '../../common/components';
 
 export interface IAuthFormState {
   apiValue: string;
@@ -26,13 +27,17 @@ export class AuthForm extends React.Component<IAuthFormProps, IAuthFormState> {
 
   render() {
     return (
-      <AuthFormWrapper>
+      <ModalWrapper>
         <Input onChange={this.onChange} placeholder="Enter your api key" />
         <Button onClick={this.onSubmit}>Submit</Button>
-      </AuthFormWrapper>
+      </ModalWrapper>
     );
   }
 }
+
+const ModalWrapper = styled.div`
+  display: flex;
+`;
 
 export const connectedAuthForm = connect<IStore['auth'], IConnectedDispatch>(({ auth }: IStore) => auth, {
   checkKey,
