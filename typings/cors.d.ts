@@ -1,4 +1,5 @@
+import { ApplicationRequestHandler } from 'express-serve-static-core';
+
 declare module 'cors' {
-  const content: any;
-  export default content;
+  export default function(): ApplicationRequestHandler<any>;
 }
