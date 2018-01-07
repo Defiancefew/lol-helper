@@ -1,15 +1,16 @@
-import Express from 'express';
+import * as express from 'express';
 import axios from 'axios';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import morgan from 'morgan';
+import * as cors from 'cors';
+import * as bodyParser from 'body-parser';
+import * as morgan from 'morgan';
 
-const app = Express();
+const app = express();
 
 app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+app.use('/static', express.static('/src/static'));
 
 app.all('/api/**', ({ originalUrl, method, headers, body }, res) => {
   const url = originalUrl.replace('/api', '');
@@ -20,17 +21,16 @@ app.all('/api/**', ({ originalUrl, method, headers, body }, res) => {
     url: `https://${region}.api.riotgames.com/lol${url}`,
   };
 
-  if (process.env.NODE_ENV === 'development') {
-    console.log(options); // tslint:disable-line:no-console
-  }
-
   return axios(options)
-    .then(json => {
-      res.status(json.status).send(json);
+    .then(resp => {
+      if (process.env.NODE_ENV === 'development') {
+        console.log(resp.status, options, resp.data); // tslint:disable-line:no-console
+      }
+
+      res.status(resp.status).send(resp.data);
     })
     .catch(err => {
-      console.log(err); // tslint:disable-line:no-console
-      res.status(400).send(err);
+      return console.log(err) || res.status(err.status).send(err); // tslint:disable-line:no-console
     });
 });
 

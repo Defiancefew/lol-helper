@@ -6,6 +6,7 @@ import { routerMiddleware } from 'react-router-redux';
 import DevTools from './components/DevTools';
 import { rootReducer } from './rootReducer';
 import { createBrowserHistory } from 'history';
+import { persistStore } from 'redux-persist';
 
 export const history = createBrowserHistory();
 const router = routerMiddleware(history);
@@ -29,5 +30,7 @@ export function configureStore(initialState?: any) {
     module.hot.accept('./rootReducer', () => store.replaceReducer(rootReducer));
   }
 
-  return store;
+  const persistor = persistStore(store);
+
+  return { store, persistor };
 }
