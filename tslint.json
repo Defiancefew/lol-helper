@@ -6,10 +6,11 @@
     "no-trailing-whitespace": [true, "ignore-template-strings"],
     "ordered-imports": false,
     "import-name": false,
-    "no-submodule-imports": [true, "lodash/fp"],
+    "no-submodule-imports": [true, "lodash/fp", "redux-persist/lib/storage", "redux-persist/lib/integration/react"],
     "arrow-parens": false,
     "object-literal-sort-keys": false,
     "ter-arrow-parens": false,
+    "jsx-boolean-value": false,
     "member-access": false
   }
 }
