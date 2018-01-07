@@ -1,12 +1,18 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { App, DevTools } from './';
+import { connect } from 'react-redux';
+import { App, DevTools, AppLayout, NoMatch } from './';
+import { AuthForm } from '../../auth/components';
 
 export const Routes = () => (
-  <div>
+  <AppLayout>
     <DevTools />
     <Switch>
-      <Route path="/" component={App} />
+      <Route exact path="/" component={App} />
+      <Route path="/keycheck" component={AuthForm} />
+      <Route component={NoMatch} />
     </Switch>
-  </div>
+  </AppLayout>
 );
+
+export const ConnectedRoutes: any = connect(({ auth }: any) => auth, null)(Routes);
