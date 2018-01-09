@@ -4,6 +4,7 @@ import { IStore } from 'models';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { reducer as auth } from '../auth/reducer';
+import { reducer as summoner } from '../summoner/reducer';
 
 const config = {
   storage,
@@ -13,6 +14,7 @@ const config = {
 
 export const rootReducer = combineReducers<IStore>({
   routing,
+  summoner,
   auth: persistReducer(config, auth),
 });
 
