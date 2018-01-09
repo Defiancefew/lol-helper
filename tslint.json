@@ -11,6 +11,7 @@
     "object-literal-sort-keys": false,
     "ter-arrow-parens": false,
     "jsx-boolean-value": false,
-    "member-access": false
+    "member-access": false,
+    "jsx-no-multiline-js": false
   }
 }
