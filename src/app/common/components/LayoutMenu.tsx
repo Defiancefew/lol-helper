@@ -10,5 +10,11 @@ export const LayoutMenu: React.SFC<any> = () => (
     <Menu.Item>
       <Link to="/keycheck">Auth</Link>
     </Menu.Item>
+    <Menu.Item>
+      <Link to="/summoner">Summoner</Link>
+    </Menu.Item>
+    <Menu.Item>
+      <Link to="/itemset">Item set</Link>
+    </Menu.Item>
   </Menu>
 );

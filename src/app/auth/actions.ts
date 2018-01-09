@@ -31,6 +31,8 @@ export const checkKey = (apiKey: string): ThunkAction<Promise<Action>, IStore, v
         dispatch(push(previousLocation));
         return dispatch(keyCheckSuccess(apiKey));
       }
+
+      return dispatch(push('/keycheck'));
     })
     .catch((err: AxiosError) => dispatch(keyCheckFailure(err)));
 };

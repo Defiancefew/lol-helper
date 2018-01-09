@@ -24,16 +24,12 @@ app.all('/api/**', ({ originalUrl, method, headers, body }, res) => {
   return axios(options)
     .then(resp => {
       if (process.env.NODE_ENV === 'development') {
-        console.log(resp.status, options, resp.data); // tslint:disable-line:no-console
+        console.log(resp.status, resp.data); // tslint:disable-line:no-console
       }
 
-      res.status(resp.status).send(resp.data);
+      return res.status(resp.status).send(resp.data);
     })
-    .catch(err => {
-      return console.log(err) || res.status(err.status).send(err); // tslint:disable-line:no-console
-    });
+    .catch(err => res.status(err.response.status).send({ error: err.response.statusText }));
 });
 
-app.listen(3001, () => {
-  console.log('Server listening on 3001 port'); // tslint:disable-line:no-console
-});
+app.listen(3001, () => console.log('Server listening on 3001 port')); // tslint:disable-line:no-console
