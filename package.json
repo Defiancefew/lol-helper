@@ -7,8 +7,8 @@
     "proxy:dev": "cross-env NODE_ENV=development nodemon",
     "webpack:dev": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack/webpack.development.config.js",
     "dev": "concurrently --kill-others \"npm run webpack:dev\" \"npm run proxy:dev\"",
-    "download:sprites":
-      "ts-node --pollingInterval 1000 --compilerOptions '{\"module\":\"commonjs\", \"target\":\"es5\", \"allowSyntheticDefaultImports\":true,\"moduleResolution\":\"node\"}' ./src/utils/downloadImages.ts"
+    "download:sprites": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' ./src/utils/downloadImages.ts",
+    "download:convert": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' ./src/utils/createStaticMap.ts"
   },
   "prettier": {
     "useTabs": false,
@@ -84,6 +84,7 @@
     "tslint-config-airbnb": "^5.4.2",
     "tslint-react": "^3.3.3",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.7"
+    "webpack-dev-server": "^2.9.7",
+    "yargs": "^10.1.1"
   }
 }
