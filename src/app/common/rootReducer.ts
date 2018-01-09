@@ -5,6 +5,7 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { reducer as auth } from '../auth/reducer';
 import { reducer as summoner } from '../summoner/reducer';
+import { reducer as itemset } from '../itemset/reducer';
 
 const config = {
   storage,
@@ -15,6 +16,7 @@ const config = {
 export const rootReducer = combineReducers<IStore>({
   routing,
   summoner,
+  itemset, // TODO: Configure persist after feature is finished
   auth: persistReducer(config, auth),
 });
 
