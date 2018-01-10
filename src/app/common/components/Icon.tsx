@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { backgroundStyle } from 'utils';
+import { backgroundStyle, parseItemTags } from 'utils';
 import _ from 'lodash';
 import * as iconData from 'static';
 
@@ -21,8 +21,29 @@ const findSpritePath = (type: string, id: string | number) => {
   return `[${type}].data[${id}]`;
 };
 
+export const chooseDescription = (type: string, spriteData: any): string | JSX.Element => {
+  const description = _.get(spriteData, 'description', null);
+  const name = _.get(spriteData, 'name', null);
+
+  if (type === 'item') {
+    const parsedDescription = type === 'item' && description ? { __html: parseItemTags(description) } : null;
+    return (
+      <span>
+        <div>{name}</div>
+        <span dangerouslySetInnerHTML={parsedDescription} />
+      </span>
+    );
+  }
+
+  if (type === 'champion') {
+    return name;
+  }
+
+  return description;
+};
+
 export const Icon: React.SFC<IIconProps> = ({ type, id, onClick }) => {
-  const spriteData = _.get(iconData, findSpritePath(type, id), {
+  const nullDesc = {
     image: {
       type: 'profileicon',
       sprite: 'profileicon0.png',
@@ -30,14 +51,54 @@ export const Icon: React.SFC<IIconProps> = ({ type, id, onClick }) => {
       x: '0',
       y: '0',
     },
-  });
+  };
+  const spriteData = _.get(iconData, findSpritePath(type, id), nullDesc);
 
-  return <StyledIcon onClick={onClick} background={backgroundStyle(spriteData.image)} />;
+  // TODO: Perform more clear check for null description
+  return (
+    <IconWrapper>
+      {spriteData !== nullDesc && (
+        <StyledDescription type={type}>{chooseDescription(type, spriteData)}</StyledDescription>
+      )}
+      <StyledIcon onClick={onClick} background={backgroundStyle(spriteData.image)} />
+    </IconWrapper>
+  );
 };
 
-export const StyledIcon = styled.div`
+const StyledDescription: any = styled.div.attrs({
+  style: ({ type }: any) => ({
+    minWidth: (type === 'item' || type === 'summoner') && '300px',
+  }),
+})`
+  display: none;
+  z-index: 9999;
+  padding: 10px;
+  background: black;
+  color: white;
+  position: absolute;
+  top: 48px;
+  left: 48px;
+  user-select: none;
+  white-space: no-wrap;
+`;
+
+const StyledIcon: any = styled.div.attrs({
+  style: (props: any) => ({
+    background: props.background,
+  }),
+})`
   display: block;
   width: 48px;
   height: 48px;
-  background: ${(props: { background: string }) => props.background};
+`;
+
+// :active is needed to avoid huge screen capture while dragging with description
+const IconWrapper = styled.span`
+  position: relative;
+  &:hover ${StyledDescription} {
+    display: block;
+  }
+  &:active ${StyledDescription} {
+    display: none;
+  }
 `;

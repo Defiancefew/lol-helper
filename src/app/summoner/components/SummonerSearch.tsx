@@ -102,7 +102,7 @@ export class SummonerSearchWrapper extends React.Component<SearchProps, ISearchS
           {!_.isEmpty(summonerInfo) ? (
             <SearchHistoryProfile push={push} {...summonerInfo as ISummonerInfo} />
           ) : (
-            'Not found'
+            'Nothing found (yet)'
           )}
         </StyledSearch>
         {!_.isEmpty(searchHistory) && (

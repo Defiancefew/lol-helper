@@ -12,6 +12,9 @@
     "ter-arrow-parens": false,
     "jsx-boolean-value": false,
     "member-access": false,
-    "jsx-no-multiline-js": false
+    "jsx-no-multiline-js": false,
+    "jsx-no-lambda": false,
+    "no-shadowed-variable": false,
+    "semicolon": false
   }
 }

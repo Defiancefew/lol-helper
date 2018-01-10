@@ -5,6 +5,7 @@ import { push } from 'react-router-redux';
 import { ActionCreator, Dispatch, Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { IStore } from 'models';
+import { notification } from 'antd';
 
 const NS = '@@AUTH/';
 
@@ -28,6 +29,10 @@ export const checkKey = (apiKey: string): ThunkAction<Promise<Action>, IStore, v
     .then((resp: AxiosResponse) => {
       if (resp.status === 200) {
         axios.defaults.headers.common['X-Riot-Token'] = apiKey;
+        notification.success({
+          message: 'Auth Successfull',
+          description: '',
+        });
         dispatch(push(previousLocation));
         return dispatch(keyCheckSuccess(apiKey));
       }
