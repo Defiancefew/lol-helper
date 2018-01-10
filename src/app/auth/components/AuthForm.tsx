@@ -16,6 +16,16 @@ export interface IConnectedDispatch {
 
 type IAuthFormProps = IConnectedDispatch & IStore['auth'];
 
+const ModalWrapper = styled.div`
+  display: flex;
+`;
+
+const AuthWrapper = styled.div`
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+`;
+
 export class AuthForm extends React.Component<IAuthFormProps, IAuthFormState> {
   state = {
     apiValue: '',
@@ -26,18 +36,22 @@ export class AuthForm extends React.Component<IAuthFormProps, IAuthFormState> {
   onSubmit = () => this.props.checkKey(this.state.apiValue);
 
   render() {
+    const { isApiChecked } = this.props;
+    const { apiValue } = this.state;
+
     return (
-      <ModalWrapper>
-        <Input onChange={this.onChange} placeholder="Enter your api key" />
-        <Button onClick={this.onSubmit}>Submit</Button>
-      </ModalWrapper>
+      <AuthWrapper>
+        <h2>Your key {isApiChecked ? 'is still valid' : 'has expired'}</h2>
+        <ModalWrapper>
+          <Input value={apiValue} onChange={this.onChange} placeholder="Enter your api key" />
+          <Button type="primary" onClick={this.onSubmit}>
+            Submit
+          </Button>
+        </ModalWrapper>
+      </AuthWrapper>
     );
   }
 }
-
-const ModalWrapper = styled.div`
-  display: flex;
-`;
 
 export const connectedAuthForm = connect<IStore['auth'], IConnectedDispatch>(({ auth }: IStore) => auth, {
   checkKey,
