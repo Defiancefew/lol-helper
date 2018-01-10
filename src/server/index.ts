@@ -3,8 +3,16 @@ import axios from 'axios';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
+import * as path from 'path';
+import { isDev, isProd } from '../utils/variables';
+import { serverPort } from '../utils/endpoints';
 
 const app = express();
+const port = isDev ? 3001 : serverPort;
+
+if (isProd) {
+  app.use('/', require('express-static-gzip')('dist')); // tslint:disable-line:no-var-requires
+}
 
 app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,7 +31,7 @@ app.all('/api/**', ({ originalUrl, method, headers, body }, res) => {
 
   return axios(options)
     .then(resp => {
-      if (process.env.NODE_ENV === 'development') {
+      if (isDev) {
         console.log(resp.status, resp.data); // tslint:disable-line:no-console
       }
 
@@ -32,4 +40,12 @@ app.all('/api/**', ({ originalUrl, method, headers, body }, res) => {
     .catch(err => res.status(err.response.status).send({ error: err.response.statusText }));
 });
 
-app.listen(3001, () => console.log('Server listening on 3001 port')); // tslint:disable-line:no-console
+app.get('*', (req, res) => {
+  if (isProd) {
+    return res.sendFile(path.resolve(process.cwd(), 'dist', 'index.html'));
+  }
+
+  return;
+});
+// We launch proxy on separate port while developing
+app.listen(port, () => console.log(`Server listening on ${port} port`)); // tslint:disable-line:no-console
