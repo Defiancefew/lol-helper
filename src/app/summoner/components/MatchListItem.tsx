@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import * as staticData from 'static'; // TODO: Omit this afterwards
+import { queueMap } from 'static'; // TODO: Omit this afterwards
 import _ from 'lodash';
 import { Icon } from '../../common/components';
-
-const { queueMap } = staticData;
 
 const ItemWrapper = styled.div`
   display: flex;
@@ -13,6 +11,7 @@ const ItemWrapper = styled.div`
   margin: 5px 0;
   border: 1px solid black;
   cursor: pointer;
+  text-align: center;
 `;
 
 const DescWrapper = styled.span`
