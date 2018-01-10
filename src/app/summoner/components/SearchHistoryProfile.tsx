@@ -19,7 +19,7 @@ const InfoWrapper = styled.div`
 type SearchHistoryProfileProps = ISummonerInfo & { push?: (location: string) => void };
 
 export class SearchHistoryProfile extends React.Component<SearchHistoryProfileProps> {
-  handleClick = () => this.props.push && this.props.push(`/summoner/${this.props.accountId}`);
+  handleClick = () => this.props.push(`/summoner/${this.props.accountId}`);
 
   render() {
     const { profileIconId, id, name, summonerLevel, push } = this.props;
