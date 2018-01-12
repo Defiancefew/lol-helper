@@ -45,11 +45,10 @@ export const chooseDescription = (type: string, spriteData: any): string | JSX.E
 export const Icon: React.SFC<IIconProps> = ({ type, id, onClick }) => {
   const nullDesc = {
     image: {
-      type: 'profileicon',
-      sprite: 'profileicon0.png',
-      id: '0',
-      x: '0',
-      y: '0',
+      type: 'item',
+      sprite: 'item2.png',
+      x: '144',
+      y: '192',
     },
   };
   const spriteData = _.get(iconData, findSpritePath(type, id), nullDesc);
