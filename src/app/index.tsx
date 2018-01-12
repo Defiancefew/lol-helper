@@ -4,6 +4,19 @@ import Root from './common/components/Root';
 import { history, configureStore } from './common/configureStore';
 import 'antd/dist/antd.less'; // tslint:disable-line:no-submodule-imports
 import { checkKey } from './auth/actions';
+import { injectGlobal } from 'styled-components';
+
+/* tslint:disable:no-unused-expression */
+injectGlobal`
+  *, *:before, *:after {
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: gray;
+  }
+`;
+/* tslint:enable:no-unused-expression */
 
 const { persistor, store } = configureStore();
 const root = document.createElement('div');

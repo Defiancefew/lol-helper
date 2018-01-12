@@ -13,7 +13,11 @@ const ItemsWrapper = styled.div`
   margin-top: 16px;
 `;
 
-export class ItemsList extends React.Component<{ items: { data: { [key: string]: IItem } } }, any> {
+export interface IItemsListProps {
+  items: { data: { [key: string]: IItem } };
+}
+
+export class ItemsList extends React.Component<IItemsListProps> {
   render() {
     const { items } = this.props;
     return (

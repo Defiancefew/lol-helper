@@ -6,7 +6,7 @@ import { Icon } from '../../common/components';
 export interface IProxyIconProps {
   id: string;
   type: 'champion' | 'item' | 'spell' | 'profileicon' | 'summoner';
-  connectDragSource(component: JSX.Element): JSX.Element;
+  connectDragSource?(component: JSX.Element): JSX.Element;
 }
 
 const ProxyIcon: React.SFC<IProxyIconProps> = ({ connectDragSource, type, id }) =>
@@ -17,7 +17,7 @@ const ProxyIcon: React.SFC<IProxyIconProps> = ({ connectDragSource, type, id }) 
   );
 
 const itemIconSource = {
-  beginDrag({ id, type }: { type: string; id: string }) {
+  beginDrag({ id, type }: IProxyIconProps) {
     return { id };
   },
 };

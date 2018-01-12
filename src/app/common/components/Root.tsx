@@ -1,12 +1,21 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { Provider, Store } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { hot } from 'react-hot-loader';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { Routes } from './Routes';
 import { ConnectedModal } from '../../auth/components';
+import { IStore } from 'models';
+import { History } from 'history';
 
-export const Root: React.SFC<any> = ({ history, store, persistor, onBeforeLift }) => (
+export interface IRootProps {
+  history: History;
+  store: Store<IStore>;
+  persistor: any;
+  onBeforeLift(): void;
+}
+
+export const Root: React.SFC<IRootProps> = ({ history, store, persistor, onBeforeLift }) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <PersistGate persistor={persistor} onBeforeLift={onBeforeLift}>
