@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Input, Form, Select, Button, Spin } from 'antd';
+import { Input, Form, Select, Button, Spin, notification } from 'antd';
 import styled from 'styled-components';
 import { IStore, ISummonerInfo } from 'models';
 import _ from 'lodash';
@@ -10,6 +10,7 @@ import { ISummonerReducerState } from '../reducer';
 import { clearSearch, fetchSummoner } from '../actions';
 
 const { Option } = Select;
+const { Search } = Input;
 
 export interface IConnectedDispatch {
   clearSearch: typeof clearSearch;
@@ -23,28 +24,17 @@ export interface ISearchState {
   id: string;
 }
 
-const StyledSearch = styled.div`
-  margin: 15px 0;
-`;
-
-const ButtonsWrapper = styled.div`
-  margin: 15px 0;
+const FormWrapper = styled(Form as any)`
   display: flex;
-  flex: 1;
-  button:nth-child(1) {
-    flex-grow: 1;
+  align-items: center;
+  margin-right: 15px !important;
+
+  & .ant-select {
+    width: 50%;
   }
 `;
 
-const FormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-basis: 300px;
-`;
-
-type SearchProps = IConnectedDispatch & IStore['summoner'];
+type SearchProps = IConnectedDispatch & IStore['summoner'] & { isApiChecked: boolean };
 
 export class SummonerSearchWrapper extends React.Component<SearchProps, ISearchState> {
   state = {
@@ -58,65 +48,46 @@ export class SummonerSearchWrapper extends React.Component<SearchProps, ISearchS
   handleInputChange = (e: React.ChangeEvent<any>) => this.setState({ id: e.currentTarget.value });
 
   handleSubmit = (e: any) => {
-    e.preventDefault();
     const { id, type, region } = this.state;
+
+    if (id.length === 0) {
+      return notification.error({
+        message: 'Empty search input',
+        description: '',
+      });
+    }
+
     return this.props.fetchSummoner(id, type, region);
   };
 
   render() {
     const { region, type, id } = this.state;
     const { summonerInfo, searchHistory, push, isLoading } = this.props;
-    const renderHistory = _.map(_.slice(searchHistory, 0, searchHistory.length - 1), (item: ISummonerInfo, idx) => (
-      <SearchHistoryProfile key={idx} {...item} />
-    ));
-
-    if (isLoading) {
-      return (
-        <div>
-          <Spin /> Loading...
-        </div>
-      );
-    }
 
     return (
-      <div>
-        <FormWrapper>
-          <Form layout="vertical" onSubmit={this.handleSubmit}>
-            <Select value={type} onChange={this.handleSelectCHange}>
-              <Option value="id">id</Option>
-              <Option value="name">name</Option>
-              <Option value="account">account</Option>
-            </Select>
-            <Input onChange={this.handleInputChange} placeholder={`Enter your ${type}`} value={id} />
-            <ButtonsWrapper>
-              <Button htmlType="submit" type="primary" icon="search">
-                Submit
-              </Button>
-              <Button icon="cross" onClick={this.props.clearSearch} />
-            </ButtonsWrapper>
-          </Form>
-        </FormWrapper>
-
-        <StyledSearch>
-          <h2>Search results:</h2>
-          {!_.isEmpty(summonerInfo) ? (
-            <SearchHistoryProfile push={push} {...summonerInfo as ISummonerInfo} />
-          ) : (
-            'Nothing found (yet)'
-          )}
-        </StyledSearch>
-        {!_.isEmpty(searchHistory) && (
-          <div>
-            <h2>Recent search:</h2> {renderHistory}
-          </div>
-        )}
-      </div>
+      <FormWrapper layout="vertical" onSubmit={this.handleSubmit}>
+        <Select value={type} onChange={this.handleSelectCHange}>
+          <Option value="id">id</Option>
+          <Option value="name">name</Option>
+          <Option value="account">account</Option>
+        </Select>
+        <Search
+          onSearch={this.handleSubmit}
+          onChange={this.handleInputChange}
+          placeholder={`Enter your ${type}`}
+          value={id}
+          enterButton
+        />
+      </FormWrapper>
     );
   }
 }
 
-export const ConnectedSearch = connect(({ summoner }: { summoner: ISummonerReducerState }) => summoner, {
-  clearSearch,
-  fetchSummoner,
-  push,
-})(SummonerSearchWrapper);
+export const ConnectedSearchForm = connect(
+  ({ summoner, auth }: IStore) => ({ ...summoner, isApiChecked: auth.isApiChecked }),
+  {
+    clearSearch,
+    fetchSummoner,
+    push,
+  },
+)(SummonerSearchWrapper);
