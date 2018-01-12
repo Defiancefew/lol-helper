@@ -30,6 +30,7 @@ export const fetchSummoner = (id: string, type = 'id', region = 'euw1'): ThunkAc
 ) => {
   const previousLocation = getState().routing.location.pathname || '/';
   dispatch(summonerSearchRequest());
+  dispatch(push('/summoner'));
 
   return axios({
     method: 'GET',
