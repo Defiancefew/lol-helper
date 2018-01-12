@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { App, DevTools, AppLayout, NoMatch } from './';
+import { News, DevTools, AppLayout, NoMatch } from './';
 import { AuthForm } from '../../auth/components';
 import { ConnectedSearch as Summoner, SummonerProfilePage, MatchPage } from '../../summoner/components';
 import { ConnectedDndProfile as ItemSetProfile } from '../../itemset/components';
@@ -12,7 +12,7 @@ export const Routes = () => (
   <AppLayout>
     {isDev && <DevTools />}
     <Switch>
-      <Route exact path="/" component={App} />
+      <Route exact path="/" component={News} />
       <Route path="/keycheck" component={AuthForm} />
       <Route path="/summoner/match/:matchid" component={MatchPage} />
       <Route path="/summoner/:profile" component={SummonerProfilePage} />
