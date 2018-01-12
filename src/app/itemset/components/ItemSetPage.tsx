@@ -109,6 +109,7 @@ export class ItemSetPage extends React.Component<ITemSetProps, IItemSetPageState
     this.setState(prevState => {
       const newFilterList = { ...prevState.categoriesFilter, [name]: !prevState.categoriesFilter[name] };
       const enabledFilters = _.map(_.pickBy(newFilterList, filter => !!filter), (filter, key) => key.toString());
+
       const newItemsList = {
         ...item,
         data: _.pickBy(

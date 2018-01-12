@@ -39,12 +39,13 @@ const InputGroup = styled.div`
 
 export interface IItemBlock {
   block: IItemSetBlock;
-  isOver: boolean;
+  isOver?: boolean;
   blockIdx: number;
-  connectDropTarget(component: JSX.Element): JSX.Element;
+  connectDropTarget?(component: JSX.Element): JSX.Element;
   itemRemove(blockIdx: number, idx: number): void;
   blockRemove(blockIdx: number): void;
   blockUpdate(block: IItemSetBlock, blockIdx: number): void;
+  itemAdd(blockIdx: number, id: number): void;
 }
 
 export class ItemBlock extends React.Component<IItemBlock> {
@@ -109,7 +110,7 @@ export class ItemBlock extends React.Component<IItemBlock> {
 }
 
 const itemBlockTarget = {
-  drop(props: any, monitor: any) {
+  drop(props: IItemBlock, monitor: any) {
     const { id } = monitor.getItem();
     const { itemAdd, blockIdx } = props;
 
