@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { News, DevTools, AppLayout, NoMatch } from './';
 import { AuthForm } from '../../auth/components';
-import { ConnectedSearch as Summoner, SummonerProfilePage, MatchPage } from '../../summoner/components';
+import { ConnectedHistory, SummonerProfilePage, MatchPage } from '../../summoner/components';
 import { ConnectedDndProfile as ItemSetProfile } from '../../itemset/components';
 import { ConnectedCalc as RuneCalc } from '../../rune/components';
 import { isDev } from 'utils';
@@ -16,7 +16,7 @@ export const Routes = () => (
       <Route path="/keycheck" component={AuthForm} />
       <Route path="/summoner/match/:matchid" component={MatchPage} />
       <Route path="/summoner/:profile" component={SummonerProfilePage} />
-      <Route path="/summoner" component={Summoner} />
+      <Route path="/summoner" component={ConnectedHistory} />
       <Route path="/itemset" component={ItemSetProfile} />
       <Route path="/rune" component={RuneCalc} />
       <Route component={NoMatch} />
