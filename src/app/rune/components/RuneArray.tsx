@@ -52,7 +52,6 @@ export class RuneArray extends React.Component<any, IRuneArrayState> {
   onAddRune = ({ slotIdx, runeId, runeIdx }: { slotIdx: number; runeId: number; runeIdx: number }) => {
     const { runeSlot } = this.state;
     const newState = runeSlot === 4 ? { primaryIdx: runeIdx } : { secondaryIdx: runeIdx };
-    this.setState(newState as IRuneArrayState);
     this.toggleRuneLine(newState);
     return this.props.addRune({ slotIdx, runeId });
   };
