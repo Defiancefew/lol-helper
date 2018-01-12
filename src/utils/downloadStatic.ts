@@ -9,10 +9,12 @@ import { resolve } from 'path';
 
 const pWriteStream = promisify(createWriteStream);
 const spritePath = resolve(__dirname, '../static/img/sprites');
-const listOfSprites = ['profileicon', 'spell', 'champion', 'item'];
-const partialUrl = dataDragonUrl(dataDragonVersion, 'img', 'sprite/');
+const staticPath = resolve(__dirname, '../static/data');
+const listOfStatic = ['profileicon', 'spell', 'champion', 'item'];
+const spriteUrl = dataDragonUrl(dataDragonVersion, 'img', 'sprite/');
+const staticUrl = dataDragonUrl(dataDragonVersion, 'data', 'en_US/');
 
-const dowloadImage = (url: string, fileName: string) =>
+const saveFiles = (type: string, url: string, fileName: string) =>
   axios({
     url,
     method: 'GET',
@@ -20,18 +22,21 @@ const dowloadImage = (url: string, fileName: string) =>
   })
     .then(resp => {
       if (resp.status === 200) {
-        resp.data.pipe(createWriteStream(`${spritePath}/${fileName}`));
+        resp.data.pipe(createWriteStream(`${type === 'sprite' ? spritePath : staticPath}/${fileName}`));
       }
     })
     .catch(err => console.log(`Error: ${err.response.status} ${err.response.statusText}. Url: ${url}`));
 
-_.forEach(listOfSprites, type => {
-  const preparedRequests = _.map(_.range(0, 10), (idx: number) => {
+_.forEach(listOfStatic, type => {
+  const preparedSpriteRequests = _.map(_.range(0, 10), (idx: number) => {
     const fileName = `${type}${idx}.png`;
-    return dowloadImage(`${partialUrl}${fileName}`, fileName);
+    return saveFiles('sprite', `${spriteUrl}${fileName}`, fileName);
   });
 
-  Promise.all(preparedRequests)
+  const fileName = `${type}.json`;
+  saveFiles('data', `${staticUrl}${fileName}`, fileName).then(() => console.log(`downloaded ${type}.json`));
+
+  Promise.all(preparedSpriteRequests)
     .then(() => console.log(`done downloading ${type}`))
     .catch(err => console.log(err));
 });
