@@ -11,8 +11,7 @@
     "build:server": "webpack  --config ./webpack/webpack.node.config.js",
     "build:client": "webpack --env.production --config ./webpack/webpack.config.js",
     "build": "npm run build:client && npm run build:server",
-    "download:sprites": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' ./src/utils/downloadImages.ts",
-    "download:convert": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' ./src/utils/createStaticMap.ts"
+    "ts-node": "ts-node --compilerOptions '{\"module\":\"commonjs\"}'"
   },
   "prettier": {
     "useTabs": false,
@@ -100,6 +99,7 @@
     "webpack-bundle-analyzer": "^2.9.2",
     "webpack-dev-server": "^2.9.7",
     "webpack-node-externals": "^1.6.0",
+    "xml2js": "^0.4.19",
     "yargs": "^10.1.1"
   }
 }
