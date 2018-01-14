@@ -8,6 +8,8 @@ export const summonerSearch = (id: string, type = 'id') => {
   return type === 'id' ? `${basicUrl}${id}` : `${basicUrl}by-${type}/${id}`;
 };
 
+export const newsUrl = 'https://euw.leagueoflegends.com/en/rss.xml';
+
 const basicMatchUrl = `${serverUrl}/match/v3/`;
 
 export const matchUrl = {
