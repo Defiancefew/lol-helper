@@ -11,7 +11,7 @@ import { Icon } from '../../common/components';
 
 export interface IConnectedDispatch {
   onFetchSingleMatch: typeof fetchSingleMatch;
-  onPush: any;
+  push: typeof push;
   match: any;
 }
 
@@ -35,14 +35,14 @@ export class MatchProfilePage extends React.Component<MatchProfilePageProps> {
   }
 
   onGoBack = () => {
-    const { onPush, summonerInfo } = this.props;
+    const { push, summonerInfo } = this.props;
     const isInfoEmpty = _.get(summonerInfo, 'accountId', '');
 
-    return onPush(`/summoner/${isInfoEmpty}`);
+    return push(`/summoner/${isInfoEmpty}`);
   };
 
   renderTeams() {
-    const { singleMatch, onPush } = this.props;
+    const { singleMatch, push } = this.props;
     const { participantIdentities, participants, teams } = singleMatch;
     const didPurpleTeamWon = teams[0].win === 'Win';
 
@@ -68,7 +68,7 @@ export class MatchProfilePage extends React.Component<MatchProfilePageProps> {
       return (
         <div key={idx}>
           <h1>{renderWinner(idx)}</h1>
-          <MatchTableLine push={onPush} {...props} />
+          <MatchTableLine push={push} {...props} />
         </div>
       );
     });
@@ -98,7 +98,12 @@ export class MatchProfilePage extends React.Component<MatchProfilePageProps> {
   }
 }
 
-export const ConnectedMatchPage = connect(({ summoner }: IStore) => summoner, {
-  onFetchSingleMatch: fetchSingleMatch,
-  onPush: push,
-})(MatchProfilePage);
+export const ConnectedMatchPage = connect(
+  ({ summoner }: IStore) => summoner,
+  {
+    push,
+    onFetchSingleMatch: fetchSingleMatch,
+  },
+  null,
+  { pure: false },
+)(MatchProfilePage);
