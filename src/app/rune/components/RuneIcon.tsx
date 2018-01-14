@@ -1,4 +1,5 @@
 import React from 'react';
+import { Tooltip } from 'antd';
 import styled, { ThemedStyledProps } from 'styled-components';
 
 const pathColor = (path: string) => {
@@ -65,18 +66,36 @@ const PerkImage: any = styled.img`
   transform: translate(-50%, -50%);
 `;
 
+const Description = styled.span`
+  font-size: 14px;
+`;
+
 export interface IRuneIconProps {
   path: string;
   isMain?: boolean;
   onClick?: any;
   perkId?: number | 'icon';
   inactive?: boolean;
+  tooltip?: string;
 }
 
-export const RuneIcon: React.SFC<IRuneIconProps> = ({ path, onClick, perkId, isMain, inactive }) => {
-  const lowerPath = path.toLowerCase();
+const wrapWithTooltip = (desc: JSX.Element) => (Component: any) => {
+  if (!desc) {
+    return Component;
+  }
 
   return (
+    <Tooltip placement="top" title={desc}>
+      {Component}
+    </Tooltip>
+  );
+};
+
+export const RuneIcon: React.SFC<IRuneIconProps> = ({ path, onClick, perkId, isMain, inactive, tooltip }) => {
+  const lowerPath = path.toLowerCase();
+  const desc = tooltip ? <span dangerouslySetInnerHTML={{ __html: tooltip }} /> : null;
+
+  return wrapWithTooltip(desc)(
     <IconButton onClick={onClick} isMain={isMain} inactive={inactive}>
       <OuterCircle viewBox="0 0 60 60" isMain={isMain}>
         <circle cx="30" cy="30" r="28.5" strokeWidth="3" fill="none" stroke={pathColor(lowerPath)} />
@@ -87,6 +106,6 @@ export const RuneIcon: React.SFC<IRuneIconProps> = ({ path, onClick, perkId, isM
       <InnerCircle perkId={!!perkId} isMain={isMain} viewBox="0 0 47 47">
         <circle cx="23.5" cy="23.5" r="22.5" strokeWidth="2" fill="none" stroke={pathColor(lowerPath)} />
       </InnerCircle>
-    </IconButton>
+    </IconButton>,
   );
 };
