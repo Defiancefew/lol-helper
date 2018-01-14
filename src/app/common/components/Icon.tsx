@@ -52,13 +52,12 @@ export const Icon: React.SFC<IIconProps> = ({ type, id, onClick }) => {
     },
   };
   const spriteData = _.get(iconData, findSpritePath(type, id), nullDesc);
+  const shouldShowDesc = spriteData !== nullDesc && type !== 'profileicon';
 
   // TODO: Perform more clear check for null description
   return (
     <IconWrapper>
-      {spriteData !== nullDesc && (
-        <StyledDescription type={type}>{chooseDescription(type, spriteData)}</StyledDescription>
-      )}
+      {shouldShowDesc && <StyledDescription type={type}>{chooseDescription(type, spriteData)}</StyledDescription>}
       <StyledIcon onClick={onClick} background={backgroundStyle(spriteData.image)} />
     </IconWrapper>
   );
@@ -79,6 +78,9 @@ const StyledDescription: any = styled.div.attrs({
   left: 48px;
   user-select: none;
   white-space: no-wrap;
+  & font {
+    font-size: 14px;
+  }
 `;
 
 const StyledIcon: any = styled.div.attrs({
