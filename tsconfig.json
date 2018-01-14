@@ -25,7 +25,10 @@
       ],
       "static": [
         "./src/static"
-      ]
+      ],
+      "common": [
+        "./src/app/common"
+      ],
     }
   },
   "awesomeTypescriptLoaderOptions": {

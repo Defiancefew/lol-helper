@@ -7,7 +7,7 @@ import { MatchTableLine } from './';
 import _ from 'lodash';
 import { push } from 'react-router-redux';
 import styled from 'styled-components';
-import { Icon } from '../../common/components';
+import { Icon } from 'common';
 
 export interface IConnectedDispatch {
   onFetchSingleMatch: typeof fetchSingleMatch;

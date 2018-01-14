@@ -1,7 +1,7 @@
 import React from 'react';
 import { DragSource } from 'react-dnd';
 import { dndTypes } from 'utils';
-import { Icon } from '../../common/components';
+import { Icon } from 'common';
 
 export interface IProxyIconProps {
   id: string;
