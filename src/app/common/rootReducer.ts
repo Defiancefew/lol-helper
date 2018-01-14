@@ -7,11 +7,18 @@ import { reducer as auth } from '../auth/reducer';
 import { reducer as summoner } from '../summoner/reducer';
 import { reducer as itemset } from '../itemset/reducer';
 import { reducer as rune } from '../rune/reducer';
+import { reducer as options } from '../options/reducer';
 
-const config = {
+const authConfig = {
   storage,
   key: 'auth',
   blackList: ['isLoading', 'isApiChecked'],
+};
+
+const optionsConfig = {
+  storage,
+  key: 'options',
+  blackList: ['isLoading', 'isVisible'],
 };
 
 export const rootReducer = combineReducers<IStore>({
@@ -19,7 +26,8 @@ export const rootReducer = combineReducers<IStore>({
   summoner,
   rune,
   itemset, // TODO: Configure persist after feature is finished
-  auth: persistReducer(config, auth),
+  options: persistReducer(optionsConfig, options),
+  auth: persistReducer(authConfig, auth),
 });
 
 export default rootReducer;

@@ -6,12 +6,14 @@ import { AuthForm } from '../../auth/components';
 import { SummonerProfilePage, MatchPage } from '../../summoner/components';
 import { ConnectedDndProfile as ItemSetProfile } from '../../itemset/components';
 import { ConnectedCalc as RuneCalc } from '../../rune/components';
+import { ConnectedModal } from '../../options';
 import { isDev } from 'utils';
 import { IStore } from 'models';
 
 export const Routes = () => (
   <AppLayout>
     {isDev && <DevTools />}
+    <ConnectedModal />
     <Switch>
       <Route exact path="/" component={News} />
       <Route path="/keycheck" component={AuthForm} />

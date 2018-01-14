@@ -1,9 +1,17 @@
 import React from 'react';
-import { Menu, Icon } from 'antd';
+import { Menu, Icon, Button } from 'antd';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { ConnectedSearchForm } from '../../summoner/components';
+import { toggleModal } from '../../options';
 
-export const LayoutMenu: React.SFC<{}> = () => (
+const StyledIcon = styled(Icon)`
+  margin-left: 10px;
+`;
+
+// Inlining styles since some parts of antd can't be styled with styled-components
+export const LayoutMenu: React.SFC<any> = ({ toggleModal }) => (
   <Menu style={{ display: 'flex', lineHeight: '64px' }} theme="dark" mode="horizontal">
     <Menu.Item>
       <Link to="/">News</Link>
@@ -19,8 +27,15 @@ export const LayoutMenu: React.SFC<{}> = () => (
     </Menu.Item>
     <Menu.Item>
       <Link to="/keycheck">
-        <Icon type="login" />
+        <StyledIcon type="login" />
       </Link>
+    </Menu.Item>
+    <Menu.Item style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <span onClick={() => toggleModal(true)}>
+        <StyledIcon type="setting" />
+      </span>
     </Menu.Item>
   </Menu>
 );
+
+export const ConnectedMenu = connect(null, { toggleModal })(LayoutMenu);
