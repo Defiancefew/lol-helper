@@ -9,22 +9,31 @@ const StyledItem = styled.div`
   display: block;
   width: 33%;
   padding: 10px;
+  & h3 {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
   & img {
     max-width: 100%;
-    height: auto;
+    height: 180px;
+    object-fit: cover;
+    margin-bottom: 20px;
   }
 `;
 
+// Reordering blocks since we are recieving rss
 const StyledContent = styled.div`
   display: flex;
   flex-direction: column;
-  & div:nth-child(2) {
+  & .field-type-file {
     order: 0;
   }
-  & div:nth-child(1) {
+  & .field-name-field-body-small {
     order: 1;
   }
-  & div:nth-child(3) {
+  & .field-name-custom-author {
+    margin-top: 10px;
     order: 2;
   }
 `;
