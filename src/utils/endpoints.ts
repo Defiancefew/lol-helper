@@ -24,3 +24,11 @@ export const matchUrl = {
     return `${basicMatchUrl}${matchId && `${matchId}/`}by-tournament-code/${tournamentCode}`;
   },
 };
+
+const baseLeagueUrl = `${serverUrl}/league/v3/`;
+
+export const leagueUrl = {
+  bySummonerId(summonerId: number) {
+    return `${baseLeagueUrl}positions/by-summoner/${summonerId}`;
+  },
+};
