@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 export interface IRuneInitialProps {
   id: number;
@@ -7,7 +7,7 @@ export interface IRuneInitialProps {
   selectPrimary(idx: number): void;
 }
 
-const PrimaryWrapper = styled.div`
+const Wrapper = styled.div`
   width: 185px;
   height: 390px;
   background: ${props => `url('/static/img/runes/${props.title}.jpg')`};
@@ -26,9 +26,9 @@ export class RuneInitial extends React.Component<IRuneInitialProps> {
   render() {
     const { title, id } = this.props;
     return (
-      <PrimaryWrapper title={title.toLowerCase()} onClick={this.onRuneClick}>
+      <Wrapper title={title.toLowerCase()} onClick={this.onRuneClick}>
         {title}
-      </PrimaryWrapper>
+      </Wrapper>
     );
   }
 }

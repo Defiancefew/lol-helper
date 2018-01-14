@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tooltip } from 'antd';
-import styled, { ThemedStyledProps } from 'styled-components';
+import styled from 'styled-components';
 
 const pathColor = (path: string) => {
   switch (path) {
