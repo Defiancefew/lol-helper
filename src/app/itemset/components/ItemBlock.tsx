@@ -126,7 +126,7 @@ const itemBlockTarget = {
     const { id } = monitor.getItem();
     const { itemAdd, blockIdx } = props;
 
-    props.itemAdd(blockIdx, id);
+    itemAdd(blockIdx, id);
 
     return {};
   },

@@ -22,7 +22,11 @@ const { persistor, store } = configureStore();
 const root = document.createElement('div');
 
 const onBeforeLift = () => {
-  store.dispatch(checkKey(store.getState().auth.apiKey));
+  const { auth, options } = store.getState();
+
+  if (options.initKeyCheck) {
+    store.dispatch(checkKey(auth.apiKey));
+  }
 };
 
 document.body.appendChild(root);
