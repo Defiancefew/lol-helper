@@ -1,11 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Input, Form, Select, Button, Spin, notification } from 'antd';
+import { Input, Form, Select, Button, Spin, notification, AutoComplete } from 'antd';
 import styled from 'styled-components';
 import { IStore, ISummonerInfo } from 'models';
 import _ from 'lodash';
-import { push } from 'react-router-redux';
-import { SearchHistoryProfile } from './';
 import { ISummonerReducerState } from '../reducer';
 import { clearSearch, fetchSummoner } from '../actions';
 
@@ -15,7 +13,6 @@ const { Search } = Input;
 export interface IConnectedDispatch {
   clearSearch: typeof clearSearch;
   fetchSummoner: typeof fetchSummoner;
-  push: typeof push;
 }
 
 export interface ISearchState {
@@ -62,16 +59,17 @@ export class SummonerSearchWrapper extends React.Component<SearchProps, ISearchS
 
   render() {
     const { region, type, id } = this.state;
-    const { summonerInfo, searchHistory, push, isLoading } = this.props;
+    const { summonerInfo, searchHistory, isLoading, isApiChecked } = this.props;
 
     return (
       <FormWrapper layout="vertical" onSubmit={this.handleSubmit}>
-        <Select value={type} onChange={this.handleSelectCHange}>
+        <Select disabled={!isApiChecked} value={type} onChange={this.handleSelectCHange}>
           <Option value="id">id</Option>
           <Option value="name">name</Option>
           <Option value="account">account</Option>
         </Select>
         <Search
+          disabled={!isApiChecked}
           onSearch={this.handleSubmit}
           onChange={this.handleInputChange}
           placeholder={`Enter your ${type}`}
@@ -88,6 +86,5 @@ export const ConnectedSearchForm = connect(
   {
     clearSearch,
     fetchSummoner,
-    push,
   },
 )(SummonerSearchWrapper);

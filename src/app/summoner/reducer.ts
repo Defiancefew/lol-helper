@@ -9,9 +9,12 @@ import {
   fetchSingleMatchRequest,
   fetchSingleMatchSuccess,
   fetchSingleMatchFailure,
+  fetchLeagueRequest,
+  fetchLeagueSuccess,
+  fetchLeagueFailure,
 } from './actions';
 import { createReducer } from 'redux-act';
-import { ISummonerInfo, IMatch, ISingleMatch } from 'models';
+import { ISummonerInfo, IMatch, ISingleMatch, ISummonerLeague } from 'models';
 import _ from 'lodash';
 
 interface IMatchList {
@@ -27,6 +30,7 @@ export interface ISummonerReducerState {
   searchHistory: ISummonerInfo[];
   matchList: IMatchList;
   singleMatch: ISingleMatch;
+  summonerLeague: ISummonerLeague[];
 }
 
 export const initialState: ISummonerReducerState = {
@@ -35,6 +39,7 @@ export const initialState: ISummonerReducerState = {
   matchList: null,
   singleMatch: null,
   searchHistory: [],
+  summonerLeague: null,
 };
 
 export const reducer = createReducer<ISummonerReducerState>(on => {
@@ -83,6 +88,22 @@ export const reducer = createReducer<ISummonerReducerState>(on => {
   }));
 
   on(fetchSingleMatchFailure, state => ({
+    ...state,
+    isLoading: false,
+  }));
+
+  on(fetchLeagueRequest, state => ({
+    ...state,
+    isLoading: true,
+  }));
+
+  on(fetchLeagueSuccess, (state, summonerLeague: ISummonerLeague[]) => ({
+    ...state,
+    summonerLeague,
+    isLoading: false,
+  }));
+
+  on(fetchLeagueFailure, state => ({
     ...state,
     isLoading: false,
   }));
