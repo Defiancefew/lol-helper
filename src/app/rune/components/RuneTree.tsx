@@ -92,7 +92,7 @@ export class RuneTree extends React.Component<IRuneTreeProps> {
               selectSecondary={selectSecondary}
             />
             {secondaryPath && (
-              <RuneArray addRune={addRune} path={secondaryName} slots={slots} runeData={secondaryData.slots} />
+              <RuneArray addRune={addRune} path={secondaryName} slots={slots} runeData={_.drop(secondaryData.slots)} />
             )}
           </Secondary>
         </Tree>

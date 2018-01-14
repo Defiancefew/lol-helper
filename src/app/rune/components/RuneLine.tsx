@@ -55,9 +55,10 @@ export class RuneLine extends React.Component<IRuneLineProps, IRuneLineState> {
         <RuneIcon onClick={this.toggleRuneLine} path={path} isMain={isMain} perkId={slots[slotIdx]} />
         <RuneSelect isMain={isMain}>
           {isOpen ? (
-            _.map(runes, ({ id }: IRunes) => (
+            _.map(runes, ({ id, shortDesc }: IRunes) => (
               <RuneIcon
                 onClick={() => this.onAddRune({ slotIdx, runeId: id })}
+                tooltip={shortDesc}
                 key={id}
                 path={path}
                 isMain={isMain}
