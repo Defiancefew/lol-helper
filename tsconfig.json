@@ -28,7 +28,7 @@
       ],
       "common": [
         "./src/app/common"
-      ],
+      ]
     }
   },
   "awesomeTypescriptLoaderOptions": {
