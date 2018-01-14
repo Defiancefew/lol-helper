@@ -9,9 +9,11 @@ const ItemWrapper = styled.div`
   align-items: center;
   padding: 10px;
   margin: 5px 0;
-  border: 1px solid black;
+  border: 1px solid gray;
   cursor: pointer;
   text-align: center;
+  max-width: 800px;
+  margin: 10px auto;
 `;
 
 const DescWrapper = styled.span`
