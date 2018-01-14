@@ -4,7 +4,7 @@ import { DragSource, DropTarget } from 'react-dnd';
 import { dndTypes } from 'utils';
 import _ from 'lodash';
 import { item } from 'static';
-import { Icon } from '../../common/components';
+import { Icon } from 'common';
 import { Icon as AntdIcon, Input, Button, Checkbox } from 'antd';
 import { IItemSetBlock } from 'models';
 

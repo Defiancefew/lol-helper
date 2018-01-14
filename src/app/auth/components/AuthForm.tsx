@@ -4,7 +4,7 @@ import { IStore } from 'models';
 import { Input, Button, notification } from 'antd';
 import styled from 'styled-components';
 import { checkKey } from '../actions';
-import { Icon } from '../../common/components';
+import { Icon } from 'common';
 
 export interface IAuthFormState {
   apiValue: string;
@@ -16,11 +16,11 @@ export interface IConnectedDispatch {
 
 type IAuthFormProps = IConnectedDispatch & IStore['auth'];
 
-const ModalWrapper = styled.div`
+const Modal = styled.div`
   display: flex;
 `;
 
-const AuthWrapper = styled.div`
+const Auth = styled.div`
   max-width: 500px;
   margin: 0 auto;
   text-align: center;
@@ -35,12 +35,14 @@ export class AuthForm extends React.Component<IAuthFormProps, IAuthFormState> {
 
   onSubmit = () => {
     const { apiValue } = this.state;
+
     if (apiValue.length === 0) {
       return notification.error({
         message: 'Key is too short',
         description: '',
       });
     }
+
     return this.props.checkKey(this.state.apiValue);
   };
 
@@ -49,19 +51,19 @@ export class AuthForm extends React.Component<IAuthFormProps, IAuthFormState> {
     const { apiValue } = this.state;
 
     return (
-      <AuthWrapper>
+      <Auth>
         <h2>Your key {isApiChecked ? 'is still valid' : 'has expired'}</h2>
-        <ModalWrapper>
+        <Modal>
           <Input value={apiValue} onChange={this.onChange} placeholder="Enter your api key" />
           <Button type="primary" onClick={this.onSubmit}>
             Submit
           </Button>
-        </ModalWrapper>
-      </AuthWrapper>
+        </Modal>
+      </Auth>
     );
   }
 }
 
-export const connectedAuthForm = connect<IStore['auth'], IConnectedDispatch>(({ auth }: IStore) => auth, {
+export const connectedAuthForm = connect(({ auth }: IStore) => auth, {
   checkKey,
 })(AuthForm);

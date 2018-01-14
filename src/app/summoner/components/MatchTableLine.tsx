@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import styled from 'styled-components';
-import { Icon } from '../../common/components';
+import { Icon } from 'common';
 
 const LineContainer = styled.div`
   display: inline-block;

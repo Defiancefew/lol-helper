@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { queueMap } from 'static'; // TODO: Omit this afterwards
 import _ from 'lodash';
-import { Icon } from '../../common/components';
+import { Icon } from 'common';
 
 const ItemWrapper = styled.div`
   display: flex;
