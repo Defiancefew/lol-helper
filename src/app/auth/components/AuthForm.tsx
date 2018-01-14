@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { IStore } from 'models';
-import { Input, Button } from 'antd';
+import { Input, Button, notification } from 'antd';
 import styled from 'styled-components';
 import { checkKey } from '../actions';
 import { Icon } from '../../common/components';
@@ -33,7 +33,16 @@ export class AuthForm extends React.Component<IAuthFormProps, IAuthFormState> {
 
   onChange = (e: React.ChangeEvent<any>) => this.setState({ apiValue: e.currentTarget.value });
 
-  onSubmit = () => this.props.checkKey(this.state.apiValue);
+  onSubmit = () => {
+    const { apiValue } = this.state;
+    if (apiValue.length === 0) {
+      return notification.error({
+        message: 'Key is too short',
+        description: '',
+      });
+    }
+    return this.props.checkKey(this.state.apiValue);
+  };
 
   render() {
     const { isApiChecked } = this.props;
