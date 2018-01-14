@@ -8,6 +8,7 @@ const Description = styled.span`
   font-size: 14px;
   text-overflow: ellipsis;
   overflow: hidden;
+  height: 40px;
 `;
 
 export const SlotDescription = ({ slots, slotIdx, runes }: any) => {
