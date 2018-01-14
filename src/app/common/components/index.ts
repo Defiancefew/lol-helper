@@ -5,3 +5,4 @@ export * from './LayoutMenu';
 export * from './Icon';
 export * from './NoMatch';
 export * from './News';
+export * from './NewsItem';
