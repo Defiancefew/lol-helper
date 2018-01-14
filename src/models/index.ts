@@ -5,3 +5,4 @@ export * from './match';
 export * from './itemset';
 export * from './item';
 export * from './rune';
+export * from './news';
