@@ -8,9 +8,7 @@ const ItemsWrapper = styled.div`
   display: flex;
   flex-flow: wrap;
   max-width: 800px;
-  height: 780px;
   padding-bottom: 400px;
-  margin-top: 16px;
 `;
 
 export interface IItemsListProps {
