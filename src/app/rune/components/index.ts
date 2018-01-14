@@ -4,5 +4,6 @@ export * from './RuneInitial';
 export * from './RuneTree';
 export * from './RuneLine';
 export * from './RuneArray';
+export * from './ArrayLine';
 export * from './RuneSecondarySelect';
 export * from './SlotDescription';
