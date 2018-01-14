@@ -14,7 +14,7 @@ const BlockWrapper: any = styled.div.attrs({
   }),
 })`
   height: 50px;
-  border: 2px solid gray;
+  border: 2px solid #b7b7b7;
   display: flex;
   width: 100%;
   margin: 10px 0 10px 5px;
@@ -35,6 +35,14 @@ const InputGroup = styled.div`
     display: flex;
     align-items: center;
   }
+`;
+
+const BlockPlaceholder = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  color: gray;
 `;
 
 export interface IItemBlock {
@@ -83,24 +91,28 @@ export class ItemBlock extends React.Component<IItemBlock> {
         {connectDropTarget(
           <span>
             <BlockWrapper background={isOver}>
-              {_.map(items, (item: string, idx: number) => (
-                <ItemWrapper key={idx}>
-                  <AntdIcon
-                    onClick={() => itemRemove(blockIdx, idx)}
-                    type="close-square"
-                    style={{
-                      position: 'absolute',
-                      fontSize: '16px',
-                      cursor: 'pointer',
-                      opacity: 0,
-                      color: 'red',
-                      zIndex: 9999,
-                      right: '0',
-                    }}
-                  />
-                  <Icon type="item" id={item} />
-                </ItemWrapper>
-              ))}
+              {!_.isEmpty(items) ? (
+                _.map(items, (item: string, idx: number) => (
+                  <ItemWrapper key={idx}>
+                    <AntdIcon
+                      onClick={() => itemRemove(blockIdx, idx)}
+                      type="close-square"
+                      style={{
+                        position: 'absolute',
+                        fontSize: '16px',
+                        cursor: 'pointer',
+                        opacity: 0,
+                        color: 'red',
+                        zIndex: 9999,
+                        right: '0',
+                      }}
+                    />
+                    <Icon type="item" id={item} />
+                  </ItemWrapper>
+                ))
+              ) : (
+                <BlockPlaceholder>Place your items here</BlockPlaceholder>
+              )}
             </BlockWrapper>
           </span>,
         )}
