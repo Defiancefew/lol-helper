@@ -19,6 +19,7 @@ module.exports = env => {
       minimize: true,
       debug: false,
     }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new ExtractTextPlugin({
       filename: '[name]-[chunkhash].css',
       allChunks: true,
@@ -42,7 +43,6 @@ module.exports = env => {
     new webpack.EnvironmentPlugin({
       NODE_ENV: env.production ? 'production' : 'development',
     }),
-    new webpack.optimize.ModuleConcatenationPlugin(),
     new HtmlWebpackPlugin(),
     ...(env.production ? prodPlugins : devPlugins),
   ];
