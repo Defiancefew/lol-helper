@@ -12,3 +12,4 @@ logs
 junit.xml
 .v8flags.*.json
 ts-node-*
+.cache-loader
