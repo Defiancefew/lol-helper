@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { IRuneData, pathName } from 'models';
 
 // This is needed to provide proper ordering in render
@@ -67,5 +66,7 @@ export const getRuneByName = (staticData: IRuneData[], name: pathName | number):
     case 'inspiration':
     case 8300:
       return staticData[1];
+    default:
+      return staticData[0];
   }
 };

@@ -1,10 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Input, Form, Select, Button, Spin, notification, AutoComplete } from 'antd';
+import { Input, Form, Select, notification } from 'antd';
 import styled from 'styled-components';
-import { IStore, ISummonerInfo } from 'models';
-import _ from 'lodash';
-import { ISummonerReducerState } from '../reducer';
+import { IStore } from 'models';
 import { clearSearch, fetchSummoner } from '../actions';
 
 const { Option } = Select;
@@ -58,8 +56,8 @@ export class SummonerSearchWrapper extends React.Component<SearchProps, ISearchS
   };
 
   render() {
-    const { region, type, id } = this.state;
-    const { summonerInfo, searchHistory, isLoading, isApiChecked } = this.props;
+    const { type, id } = this.state;
+    const { isApiChecked } = this.props;
 
     return (
       <FormWrapper layout="vertical" onSubmit={this.handleSubmit}>

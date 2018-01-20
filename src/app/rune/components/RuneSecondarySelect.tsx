@@ -56,7 +56,7 @@ export class RuneSecondarySelect extends React.Component<IRuneSecondaryProps, IR
   };
 
   render() {
-    const { secondaryName, availableSecondary, selectSecondary, secondaryDescription } = this.props;
+    const { secondaryName, availableSecondary, secondaryDescription } = this.props;
     const { isOpen } = this.state;
 
     return (

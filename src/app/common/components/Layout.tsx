@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import { ConnectedMenu } from './';
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 const StyledLayout = styled(Layout)`
   max-width: 1200px;

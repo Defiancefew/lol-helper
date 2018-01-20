@@ -1,7 +1,6 @@
 import React from 'react';
-import { Input, Button } from 'antd';
 import styled from 'styled-components';
-import { IStore, IItemSetBlock, IItemSetItem, IItem } from 'models';
+import { IStore, IItemSetBlock, IItem } from 'models';
 import { updateInitialFields, blockAdd, blockRemove, blockUpdate, itemAdd, itemRemove } from '../actions';
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -86,7 +85,6 @@ export class ItemSetPage extends React.Component<ITemSetProps, IItemSetPageState
   searchItem = (e: React.ChangeEvent<any>): void => {
     const { value } = e.target;
     const searchRegexp = new RegExp(value, 'gi');
-    const { items } = this.state;
 
     if (!value) {
       return this.setState({
@@ -131,7 +129,6 @@ export class ItemSetPage extends React.Component<ITemSetProps, IItemSetPageState
 
   render() {
     const {
-      updateInitialFields,
       blockAdd,
       blockRemove,
       blockUpdate,

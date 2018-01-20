@@ -2,9 +2,9 @@ import { axios, summonerSearch, matchUrl, leagueUrl, isDev } from 'utils';
 import { AxiosResponse, AxiosError } from 'axios';
 import { createAction } from 'redux-act';
 import { push } from 'react-router-redux';
-import { ActionCreator, Dispatch, Action } from 'redux';
+import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { IStore, ISingleMatch, ISummonerLeague } from 'models';
+import { IStore, ISummonerLeague } from 'models';
 import _ from 'lodash';
 import { matchMock, singleMatch as singleMatchMock, leagueMock } from './__mocks__';
 

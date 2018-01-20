@@ -4,7 +4,6 @@ import { IStore } from 'models';
 import { Input, Button, notification } from 'antd';
 import styled from 'styled-components';
 import { checkKey } from '../actions';
-import { Icon } from 'common';
 
 export interface IAuthFormState {
   apiValue: string;

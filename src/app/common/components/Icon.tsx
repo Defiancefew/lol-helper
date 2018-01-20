@@ -26,7 +26,7 @@ export const chooseDescription = (type: string, spriteData: any): string | JSX.E
   const name = _.get(spriteData, 'name', null);
 
   if (type === 'item') {
-    const parsedDescription = type === 'item' && description ? { __html: parseItemTags(description) } : null;
+    const parsedDescription = type === 'item' && description ? { __html: parseItemTags(description) } : undefined;
     return (
       <span>
         <div>{name}</div>

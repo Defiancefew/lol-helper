@@ -24,7 +24,7 @@ export class RuneInitial extends React.Component<IRuneInitialProps> {
   onRuneClick = () => this.props.selectPrimary(this.props.id);
 
   render() {
-    const { title, id } = this.props;
+    const { title } = this.props;
     return (
       <Wrapper title={title.toLowerCase()} onClick={this.onRuneClick}>
         {title}

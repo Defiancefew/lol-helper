@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import _ from 'lodash';
 import { Button } from 'antd';
 import { rune, getRuneByName, mainPaths } from 'static';
-import { IRuneData, pathName } from 'models';
+import { IRuneData } from 'models';
 import { RuneLine, RuneIcon, RuneArray, RuneSecondarySelect } from './';
 
 const Tree: any = styled.div`
@@ -36,10 +36,6 @@ const MainDescription = styled.div`
   h3 {
     color: white;
   }
-`;
-
-const Head = styled.div`
-  display: flex;
 `;
 
 export interface IRuneTreeProps {

@@ -1,6 +1,6 @@
 import { createReducer } from 'redux-act';
 import _ from 'lodash';
-import { addRune, removeRune, selectPrimary, selectSecondary, resetRune } from './actions';
+import { addRune, selectPrimary, selectSecondary, resetRune } from './actions';
 
 export interface IRuneState {
   mainPath: number;

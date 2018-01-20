@@ -66,10 +66,6 @@ const PerkImage: any = styled.img`
   transform: translate(-50%, -50%);
 `;
 
-const Description = styled.span`
-  font-size: 14px;
-`;
-
 export interface IRuneIconProps {
   path: string;
   isMain?: boolean;

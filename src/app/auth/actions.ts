@@ -2,9 +2,10 @@ import { axios, shardDataUrl } from 'utils';
 import { AxiosResponse, AxiosError } from 'axios';
 import { createAction } from 'redux-act';
 import { push } from 'react-router-redux';
-import { ActionCreator, Dispatch, Action } from 'redux';
+import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { IStore } from 'models';
+import _ from 'lodash';
 import { notification } from 'antd';
 
 const NS = '@@AUTH/';
@@ -16,7 +17,7 @@ export const keyCheckFailure = createAction(`${NS}KEY CHECK FAILURE`, (err: Axio
 export const keyLogout = createAction(`${NS}KEY LOGOUT`);
 
 export const checkKey = (apiKey: string): ThunkAction<Promise<Action>, IStore, void> => (dispatch, getState) => {
-  const previousLocation = getState().routing.location.pathname || '/';
+  const previousLocation = _.get(getState(), 'routing.location.pathname', '/');
   dispatch(keyCheckRequest());
 
   return axios({

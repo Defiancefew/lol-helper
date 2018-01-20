@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ISlots, IRunes, pathName } from 'models';
+import { ISlots } from 'models';
 import _ from 'lodash';
 import { RuneIcon, SlotDescription, ArrayLine } from './';
 
