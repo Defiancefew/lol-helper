@@ -14,6 +14,8 @@ const pathColor = (path: string) => {
       return 'cornflowerblue';
     case 'resolve':
       return 'green';
+    default:
+      return '';
   }
 };
 
@@ -75,7 +77,7 @@ export interface IRuneIconProps {
   tooltip?: string;
 }
 
-const wrapWithTooltip = (desc: JSX.Element) => (Component: any) => {
+const wrapWithTooltip = (desc: JSX.Element | null) => (Component: any) => {
   if (!desc) {
     return Component;
   }

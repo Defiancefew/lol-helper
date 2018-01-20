@@ -7,7 +7,6 @@ import { MatchTableLine } from './';
 import _ from 'lodash';
 import { push } from 'react-router-redux';
 import styled from 'styled-components';
-import { Icon } from 'common';
 
 export interface IConnectedDispatch {
   onFetchSingleMatch: typeof fetchSingleMatch;
@@ -43,7 +42,13 @@ export class MatchProfilePage extends React.Component<MatchProfilePageProps> {
 
   renderTeams() {
     const { singleMatch, push } = this.props;
+
+    if (!singleMatch) {
+      return null;
+    }
+
     const { participantIdentities, participants, teams } = singleMatch;
+
     const didPurpleTeamWon = teams[0].win === 'Win';
 
     return _.map(participantIdentities, ({ player }: IParticipantIdentities, idx: number) => {
@@ -98,12 +103,7 @@ export class MatchProfilePage extends React.Component<MatchProfilePageProps> {
   }
 }
 
-export const ConnectedMatchPage = connect(
-  ({ summoner }: IStore) => summoner,
-  {
-    push,
-    onFetchSingleMatch: fetchSingleMatch,
-  },
-  null,
-  { pure: false },
-)(MatchProfilePage);
+export const ConnectedMatchPage = connect(({ summoner }: IStore) => summoner, {
+  push,
+  onFetchSingleMatch: fetchSingleMatch,
+})(MatchProfilePage);

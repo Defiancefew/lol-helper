@@ -3,8 +3,8 @@ import _ from 'lodash';
 import { addRune, selectPrimary, selectSecondary, resetRune } from './actions';
 
 export interface IRuneState {
-  mainPath: number;
-  secondaryPath: number;
+  mainPath: number | null;
+  secondaryPath: number | null;
   slots: {
     [key: number]: number;
   };

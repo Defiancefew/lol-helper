@@ -5,8 +5,8 @@ import { ISummonerLeague, ISummonerInfo } from 'models';
 import { dataDragonVersion } from '../../../server/config';
 
 export interface ISummonerStatsProps {
-  summonerLeague: ISummonerLeague[];
-  summonerInfo: ISummonerInfo;
+  summonerLeague: ISummonerLeague[] | null;
+  summonerInfo: ISummonerInfo | null;
 }
 
 const Stats = styled.div`

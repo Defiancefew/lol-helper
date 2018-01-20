@@ -1,15 +1,18 @@
 import React from 'react';
-import { DragSource } from 'react-dnd';
+import { DragSource, ConnectDragSource } from 'react-dnd';
 import { dndTypes } from 'utils';
 import { Icon } from 'common';
 
 export interface IProxyIconProps {
   id: string;
   type: 'champion' | 'item' | 'spell' | 'profileicon' | 'summoner';
-  connectDragSource?(component: JSX.Element): JSX.Element;
 }
 
-const ProxyIcon: React.SFC<IProxyIconProps> = ({ connectDragSource, type, id }) =>
+export interface IItemDropSpec extends IProxyIconProps {
+  connectDragSource: ConnectDragSource;
+}
+
+const ProxyIcon: React.SFC<IItemDropSpec> = ({ connectDragSource, type, id }) =>
   connectDragSource(
     <span>
       <Icon type={type} id={id} />
@@ -22,7 +25,7 @@ const itemIconSource = {
   },
 };
 
-export const DraggableIcon = DragSource(dndTypes.ITEM_ICON, itemIconSource, (connector, monitor) => ({
+export const DraggableIcon = DragSource<IProxyIconProps>(dndTypes.ITEM_ICON, itemIconSource, (connector, monitor) => ({
   connectDragSource: connector.dragSource(),
   isDragging: monitor.isDragging(),
 }))(ProxyIcon);

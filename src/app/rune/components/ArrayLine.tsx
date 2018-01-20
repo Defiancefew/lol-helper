@@ -12,8 +12,8 @@ export interface IArrayLineProps {
     [key: number]: number;
   };
   runeData: ISlots[];
-  primaryIdx: number;
-  secondaryIdx: number;
+  primaryIdx: number | null;
+  secondaryIdx: number | null;
   slot: ISlots;
   onAddRune({ slotIdx, runeId, runeIdx }: { slotIdx: number; runeId: number; runeIdx: number }): void;
 }

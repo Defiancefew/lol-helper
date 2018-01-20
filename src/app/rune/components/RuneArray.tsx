@@ -30,8 +30,8 @@ const Descriptions = styled.span`
 export interface IRuneArrayState {
   isOpen: boolean;
   currentSlot: number;
-  primaryIdx: number;
-  secondaryIdx: number;
+  primaryIdx: number | null;
+  secondaryIdx: number | null;
 }
 
 export interface IRuneArrayProps {
@@ -61,9 +61,9 @@ export class RuneArray extends React.Component<IRuneArrayProps, IRuneArrayState>
   };
 
   render() {
-    const { path, slots, runeData, addRune } = this.props;
+    const { path, slots, runeData } = this.props;
     const { isOpen, primaryIdx, secondaryIdx } = this.state;
-    const getRuneData = (idx: number) => _.get(runeData, `[${idx}].runes`, null);
+    const getRuneData = (idx: number | null) => _.get(runeData, `[${idx}].runes`, null);
 
     return (
       <Array>

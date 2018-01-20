@@ -26,11 +26,11 @@ interface IMatchList {
 
 export interface ISummonerReducerState {
   isLoading: boolean;
-  summonerInfo: ISummonerInfo;
+  summonerInfo: ISummonerInfo | null;
   searchHistory: ISummonerInfo[];
-  matchList: IMatchList;
-  singleMatch: ISingleMatch;
-  summonerLeague: ISummonerLeague[];
+  matchList: IMatchList | null;
+  singleMatch: ISingleMatch | null;
+  summonerLeague: ISummonerLeague[] | null;
 }
 
 export const initialState: ISummonerReducerState = {
