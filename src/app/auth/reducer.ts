@@ -35,5 +35,6 @@ export const reducer = createReducer<IApiReducer>(on => {
   on(keyLogout, state => ({
     ...state,
     apiKey: '',
+    isApiChecked: false,
   }));
 }, initialState);

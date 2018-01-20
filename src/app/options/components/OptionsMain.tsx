@@ -1,9 +1,10 @@
 import React from 'react';
-import { Checkbox, Button, Modal } from 'antd';
+import { Checkbox, Button, Modal, notification } from 'antd';
 import { connect } from 'react-redux';
 import { IStore } from 'models';
 import styled from 'styled-components';
 import { toggleModal, toggleOption } from '../actions';
+import { keyLogout } from '../../auth/actions';
 
 const Line = styled.div`
   margin-top: 10px;
@@ -14,6 +15,11 @@ export class OptionsMain extends React.Component<any, any> {
     const { name, checked } = e.target;
 
     return this.props.toggleOption({ name, value: checked });
+  };
+
+  onResetClick = () => {
+    notification.info({ description: '', message: 'Key cleaned' });
+    return this.props.keyLogout();
   };
 
   render() {
@@ -31,9 +37,14 @@ export class OptionsMain extends React.Component<any, any> {
         <Line>
           <Button disabled>Update static</Button>
         </Line>
+        <Line>
+          <Button onClick={this.onResetClick}>Reset api key</Button>
+        </Line>
       </Modal>
     );
   }
 }
 
-export const ConnectedModal = connect(({ options }: IStore) => options, { toggleModal, toggleOption })(OptionsMain);
+export const ConnectedModal = connect(({ options }: IStore) => options, { toggleModal, toggleOption, keyLogout })(
+  OptionsMain,
+);

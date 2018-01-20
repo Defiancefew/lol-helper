@@ -12,13 +12,17 @@ const NS = '@@AUTH/';
 
 export const keyCheckRequest = createAction(`${NS}KEY CHECK REQUEST`);
 export const keyCheckSuccess = createAction(`${NS}KEY CHECK SUCCESS`, (apiKey: string) => apiKey);
-export const keyCheckFailure = createAction(`${NS}KEY CHECK FAILURE`, (err: AxiosError) => err);
+export const keyCheckFailure = createAction(`${NS}KEY CHECK FAILURE`, (err: AxiosError | string) => err);
 
 export const keyLogout = createAction(`${NS}KEY LOGOUT`);
 
 export const checkKey = (apiKey: string): ThunkAction<Promise<Action>, IStore, void> => (dispatch, getState) => {
   const previousLocation = _.get(getState(), 'routing.location.pathname', '/');
   dispatch(keyCheckRequest());
+
+  if (!apiKey) {
+    return dispatch(keyCheckFailure('No key specified'));
+  }
 
   return axios({
     method: 'GET',
