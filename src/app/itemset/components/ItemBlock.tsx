@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DragSource, DropTarget } from 'react-dnd';
+import { DropTarget, ConnectDropTarget } from 'react-dnd';
 import { dndTypes } from 'utils';
 import _ from 'lodash';
-import { item } from 'static';
 import { Icon } from 'common';
 import { Icon as AntdIcon, Input, Button, Checkbox } from 'antd';
 import { IItemSetBlock } from 'models';
@@ -47,16 +46,19 @@ const BlockPlaceholder = styled.span`
 
 export interface IItemBlock {
   block: IItemSetBlock;
-  isOver?: boolean;
   blockIdx: number;
-  connectDropTarget?(component: JSX.Element): JSX.Element;
   itemRemove(blockIdx: number, idx: number): void;
   blockRemove(blockIdx: number): void;
   blockUpdate(block: IItemSetBlock, blockIdx: number): void;
   itemAdd(blockIdx: number, id: number): void;
 }
 
-export class ItemBlock extends React.Component<IItemBlock> {
+export interface IDropTargetSpec extends IItemBlock {
+  connectDropTarget: ConnectDropTarget;
+  isOver: boolean;
+}
+
+export class ItemBlock extends React.Component<IDropTargetSpec> {
   onBlockRemove = () => this.props.blockRemove(this.props.blockIdx);
 
   onBlockUpdate = (e: any) => {
@@ -73,7 +75,7 @@ export class ItemBlock extends React.Component<IItemBlock> {
   };
 
   render() {
-    const { connectDropTarget, itemRemove, blockIdx, isOver, blockRemove, blockUpdate, block } = this.props;
+    const { connectDropTarget, itemRemove, blockIdx, isOver, block } = this.props;
     const { items, type, recMath } = block;
 
     return (
@@ -132,7 +134,7 @@ const itemBlockTarget = {
   },
 };
 
-export const DroppableBlock = DropTarget(dndTypes.ITEM_ICON, itemBlockTarget, (connector, monitor) => ({
+export const DroppableBlock = DropTarget<IItemBlock>(dndTypes.ITEM_ICON, itemBlockTarget, (connector, monitor) => ({
   connectDropTarget: connector.dropTarget(),
   isOver: monitor.isOver(),
 }))(ItemBlock);

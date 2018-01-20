@@ -1,5 +1,4 @@
 import { createAction } from 'redux-act';
-import _ from 'lodash';
 
 const NS = '@@ITEMSET/';
 

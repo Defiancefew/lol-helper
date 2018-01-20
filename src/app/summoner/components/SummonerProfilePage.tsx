@@ -6,7 +6,6 @@ import { fetchMatchList, fetchSummonerLeague, fetchSummoner } from '../actions';
 import { IStore, IMatch } from 'models';
 import _ from 'lodash';
 import { push } from 'react-router-redux';
-import { withRouter } from 'react-router-dom';
 import { MatchListItem, SummonerStats } from './';
 
 const PaginationWrapper = styled.div`
@@ -53,6 +52,10 @@ export class SummonerProfilePage extends React.Component<ISummonerProfilePagePro
   onChange = (current: number) => this.setState({ current });
 
   componentDidMount() {
+    if (!this.props.match) {
+      return;
+    }
+
     const {
       fetchMatchList,
       fetchSummonerLeague,
@@ -61,6 +64,7 @@ export class SummonerProfilePage extends React.Component<ISummonerProfilePagePro
       fetchSummoner,
       isLoading,
     } = this.props;
+
     const { id, account } = params;
 
     if (_.isEmpty(summonerInfo) && !isLoading) {

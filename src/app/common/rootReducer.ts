@@ -1,5 +1,5 @@
-import { combineReducers, Reducer } from 'redux';
-import { routerReducer as routing, RouterState } from 'react-router-redux';
+import { combineReducers } from 'redux';
+import { routerReducer as routing } from 'react-router-redux';
 import { IStore } from 'models';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';

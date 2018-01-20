@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import _ from 'lodash';
 import { Checkbox, Button, Row, Col, Input } from 'antd';
 
-const { Group } = Checkbox;
-
 export interface ISetCategoriesState {
   isFiltersShown: boolean;
 }

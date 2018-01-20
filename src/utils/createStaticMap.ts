@@ -1,7 +1,6 @@
 import axios from 'axios';
 import * as _ from 'lodash';
 import { writeFile } from 'fs';
-import { resolve } from 'path';
 import { argv } from 'yargs';
 
 // Downloads static data and converts { [name]: data } => {[id]: name} for easier search

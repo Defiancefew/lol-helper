@@ -14,6 +14,8 @@ const pathColor = (path: string) => {
       return 'cornflowerblue';
     case 'resolve':
       return 'green';
+    default:
+      return '';
   }
 };
 
@@ -66,10 +68,6 @@ const PerkImage: any = styled.img`
   transform: translate(-50%, -50%);
 `;
 
-const Description = styled.span`
-  font-size: 14px;
-`;
-
 export interface IRuneIconProps {
   path: string;
   isMain?: boolean;
@@ -79,7 +77,7 @@ export interface IRuneIconProps {
   tooltip?: string;
 }
 
-const wrapWithTooltip = (desc: JSX.Element) => (Component: any) => {
+const wrapWithTooltip = (desc: JSX.Element | null) => (Component: any) => {
   if (!desc) {
     return Component;
   }

@@ -1,7 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { logger, isDev } from 'utils';
-import { persistState } from 'redux-devtools';
 import { routerMiddleware } from 'react-router-redux';
 import DevTools from './components/DevTools';
 import { rootReducer } from './rootReducer';

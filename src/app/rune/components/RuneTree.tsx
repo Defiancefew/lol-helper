@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import _ from 'lodash';
 import { Button } from 'antd';
 import { rune, getRuneByName, mainPaths } from 'static';
-import { IRuneData, pathName } from 'models';
+import { IRuneData } from 'models';
 import { RuneLine, RuneIcon, RuneArray, RuneSecondarySelect } from './';
 
 const Tree: any = styled.div`
@@ -38,10 +38,6 @@ const MainDescription = styled.div`
   }
 `;
 
-const Head = styled.div`
-  display: flex;
-`;
-
 export interface IRuneTreeProps {
   mainPath: number;
   secondaryPath: number;
@@ -55,11 +51,12 @@ export class RuneTree extends React.Component<IRuneTreeProps> {
   render() {
     const { resetRune, mainPath, secondaryPath, slots, addRune, selectSecondary } = this.props;
     const primaryData: IRuneData = getRuneByName(rune, mainPath);
-    const secondaryData: IRuneData = secondaryPath && getRuneByName(rune, secondaryPath);
+    const secondaryData = _.isNumber(secondaryPath) ? getRuneByName(rune, secondaryPath) : null;
     const runeName = primaryData.name;
     const secondaryName = _.get(secondaryData, 'name', '');
+    const secondarySlots = _.get(secondaryData, 'slots', []);
     const availableSecondary = _.filter(mainPaths, path => path.id !== mainPath);
-    const primaryDescription = _.find(mainPaths, { id: mainPath });
+    const primaryDescription = _.find(mainPaths, { id: mainPath }) || { title: '', description: '' };
     const secondaryDescription = _.find(mainPaths, { id: secondaryPath });
 
     return (
@@ -92,7 +89,7 @@ export class RuneTree extends React.Component<IRuneTreeProps> {
               selectSecondary={selectSecondary}
             />
             {secondaryPath && (
-              <RuneArray addRune={addRune} path={secondaryName} slots={slots} runeData={_.drop(secondaryData.slots)} />
+              <RuneArray addRune={addRune} path={secondaryName} slots={slots} runeData={_.drop(secondarySlots)} />
             )}
           </Secondary>
         </Tree>

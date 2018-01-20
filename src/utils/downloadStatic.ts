@@ -1,13 +1,11 @@
 import { dataDragonUrl, dataDragonVersion } from '../server/config';
 import * as _ from 'lodash';
 import { createWriteStream } from 'fs';
-import { promisify } from 'util';
 import axios from 'axios';
 import { resolve } from 'path';
 
 /* tslint:disable:no-console */
 
-const pWriteStream = promisify(createWriteStream);
 const spritePath = resolve(__dirname, '../static/img/sprites');
 const staticPath = resolve(__dirname, '../static/data');
 const listOfStatic = ['profileicon', 'spell', 'champion', 'item'];

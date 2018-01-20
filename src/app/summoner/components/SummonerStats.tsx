@@ -3,13 +3,10 @@ import styled from 'styled-components';
 import _ from 'lodash';
 import { ISummonerLeague, ISummonerInfo } from 'models';
 import { dataDragonVersion } from '../../../server/config';
-import { leagueMock } from '../__mocks__';
-
-const ranks = ['I', 'II', 'III', 'IV', 'V'];
 
 export interface ISummonerStatsProps {
-  summonerLeague: ISummonerLeague[];
-  summonerInfo: ISummonerInfo;
+  summonerLeague: ISummonerLeague[] | null;
+  summonerInfo: ISummonerInfo | null;
 }
 
 const Stats = styled.div`

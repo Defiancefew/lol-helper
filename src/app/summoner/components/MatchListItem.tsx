@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { queueMap } from 'static'; // TODO: Omit this afterwards
-import _ from 'lodash';
 import { Icon } from 'common';
 
 const ItemWrapper = styled.div`
@@ -25,7 +24,7 @@ export class MatchListItem extends React.Component<any, any> {
   handleClick = () => this.props.push(`/summoner/match/${this.props.gameId}`);
 
   render() {
-    const { champion, platformId, timestamp, lane, queue, season, role } = this.props;
+    const { champion, timestamp, lane, queue } = this.props;
     const time = new Date(timestamp).toLocaleDateString('en-uS');
 
     return (

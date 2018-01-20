@@ -35,12 +35,6 @@ export class News extends React.Component<{}, INewsState> {
   setNews = (news: any) => this.setState({ news: _.get(news, 'rss.channel[0].item', []) });
 
   componentDidMount() {
-    const emitError = () =>
-      notification.error({
-        message: 'Error - failed to fetch news',
-        description: '',
-      });
-
     return axios({
       url: newsUrl,
       transformRequest: [
@@ -53,13 +47,25 @@ export class News extends React.Component<{}, INewsState> {
     })
       .then(resp => {
         if (resp.status === 200) {
-          return parseString(resp.data, (err: any, news: any) => this.setNews(news));
+          return parseString(resp.data, (err: any, news: any) => {
+            if (err) {
+              this.emitError();
+            }
+
+            return this.setNews(news);
+          });
         }
 
-        return emitError();
+        return this.emitError();
       })
-      .catch(err => emitError());
+      .catch(err => this.emitError());
   }
+
+  emitError = () =>
+    notification.error({
+      message: 'Error - failed to fetch news',
+      description: '',
+    });
 
   paginate() {
     const { current, pageSize, news } = this.state;
