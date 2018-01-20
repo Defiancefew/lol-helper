@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 const mainDir = path.resolve(__dirname, '../');
 const tsConfig = require('../tsconfig.json');
 const rules = require('./rules');
@@ -15,7 +14,7 @@ module.exports = env => ({
   devtool: env.production ? 'source-map' : 'cheap-module-eval-source-map',
   entry: entry(env),
   module: {
-    rules: rules(env),
+    rules: [rules.ts, rules.less(env)],
   },
   output: {
     path: path.join(mainDir, 'dist'),

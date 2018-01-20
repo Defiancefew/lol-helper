@@ -3,6 +3,7 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const mainDir = path.resolve(__dirname, '../');
 const resolve = require('./resolve');
+const rules = require('./rules');
 
 module.exports = {
   entry: './src/server/index.ts',
@@ -15,23 +16,12 @@ module.exports = {
     publicPath: '/',
   },
   module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: ['awesome-typescript-loader'],
-        exclude: /node_modules/,
-      },
-    ],
+    rules: [rules.ts],
   },
   resolve,
   externals: [nodeExternals()],
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false,
-      },
-    }),
+    new webpack.optimize.UglifyJsPlugin({}),
     new webpack.LoaderOptionsPlugin({
       context: process.cwd(),
       minimize: true,

@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -39,7 +39,7 @@ module.exports = env => {
   ];
 
   return [
-    new TsConfigPathsPlugin(tsConfig),
+    new ForkTsCheckerWebpackPlugin({ checkSyntacticErrors: true }),
     new webpack.EnvironmentPlugin({
       NODE_ENV: env.production ? 'production' : 'development',
     }),
