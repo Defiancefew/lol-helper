@@ -13,7 +13,7 @@
     "moduleResolution": "node",
     "alwaysStrict": false,
     "allowJs": false,
-    "jsx": "preserve",
+    "jsx": "react",
     "lib": ["es6", "es7", "dom"],
     "paths": {
       "utils": ["./src/utils"],
@@ -21,10 +21,6 @@
       "static": ["./src/static"],
       "common": ["./src/app/common"]
     }
-  },
-  "awesomeTypescriptLoaderOptions": {
-    "useBabel": true,
-    "useCache": true
   },
   "include": ["src", "typings"]
 }
