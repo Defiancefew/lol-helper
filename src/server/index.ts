@@ -29,6 +29,10 @@ app.all('/api/**', ({ originalUrl, method, headers, body }, res) => {
     url: `https://${region}.api.riotgames.com/lol${url}`,
   };
 
+  if (!headers['x-riot-token']) {
+    return res.status(401);
+  }
+
   return axios(options)
     .then(resp => {
       if (isDev) {
