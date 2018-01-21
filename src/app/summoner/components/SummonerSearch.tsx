@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Input, Form, Select, notification } from 'antd';
 import styled from 'styled-components';
 import { IStore } from 'models';
+import { regions } from 'static';
+import _ from 'lodash';
 import { clearSearch, fetchSummoner } from '../actions';
 
 const { Option } = Select;
@@ -29,21 +31,25 @@ const FormWrapper = styled(Form as any)`
   }
 `;
 
+const StyledSelect: any = styled(Select)`
+  min-width: ${(props: any) => (props.wide ? '130px' : '80px')};
+`;
+
 type SearchProps = IConnectedDispatch & IStore['summoner'] & { isApiChecked: boolean };
 
-export class SummonerSearchWrapper extends React.Component<SearchProps, ISearchState> {
+export class SummonerSearch extends React.Component<SearchProps, ISearchState> {
   state = {
-    region: 'euw1',
-    type: 'id',
-    id: '23842771',
+    region: 'EUW1',
+    type: 'name',
+    id: '',
   };
 
-  handleSelectCHange = (type: string) => this.setState({ type, id: '' });
+  handleSelectChange = (value: string) => this.setState({ region: value });
 
   handleInputChange = (e: React.ChangeEvent<any>) => this.setState({ id: e.currentTarget.value });
 
   handleSubmit = (e: any) => {
-    const { id, type, region } = this.state;
+    const { id, region } = this.state;
 
     if (id.length === 0) {
       return notification.error({
@@ -52,21 +58,32 @@ export class SummonerSearchWrapper extends React.Component<SearchProps, ISearchS
       });
     }
 
-    return this.props.fetchSummoner(id, type, region);
+    return this.props.fetchSummoner({ region, id, type: 'name' });
   };
 
   render() {
-    const { type, id } = this.state;
+    const { type, id, region } = this.state;
     const { isApiChecked } = this.props;
+
+    const RegionSelect = (
+      <StyledSelect
+        wide
+        disabled={!isApiChecked}
+        value={region}
+        onChange={(value: string) => this.handleSelectChange(value)}
+      >
+        {_.map(regions, (name: string, regionKey: string) => (
+          <Option key={regionKey} value={regionKey}>
+            {name}
+          </Option>
+        ))}
+      </StyledSelect>
+    );
 
     return (
       <FormWrapper layout="vertical" onSubmit={this.handleSubmit}>
-        <Select disabled={!isApiChecked} value={type} onChange={this.handleSelectCHange}>
-          <Option value="id">id</Option>
-          <Option value="name">name</Option>
-          <Option value="account">account</Option>
-        </Select>
         <Search
+          addonBefore={RegionSelect}
           disabled={!isApiChecked}
           onSearch={this.handleSubmit}
           onChange={this.handleInputChange}
@@ -85,4 +102,4 @@ export const ConnectedSearchForm = connect(
     clearSearch,
     fetchSummoner,
   },
-)(SummonerSearchWrapper);
+)(SummonerSearch);
