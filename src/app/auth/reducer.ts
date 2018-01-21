@@ -1,5 +1,7 @@
 import { keyCheckRequest, keyCheckSuccess, keyCheckFailure, keyLogout } from './actions';
 import { createReducer } from 'redux-act';
+import { combineReducers } from 'redux';
+import { F, T } from 'lodash/fp';
 
 export interface IApiReducer {
   apiKey: string;
@@ -7,34 +9,21 @@ export interface IApiReducer {
   isApiChecked: boolean;
 }
 
-export const initialState: IApiReducer = {
-  apiKey: '',
-  isLoading: false,
-  isApiChecked: false,
-};
+const isLoading = createReducer(on => {
+  on(keyCheckRequest, T);
+  on(keyCheckSuccess, F);
+  on(keyCheckFailure, F);
+}, false);
 
-export const reducer = createReducer<IApiReducer>(on => {
-  on(keyCheckRequest, state => ({
-    ...state,
-    isLoading: true,
-  }));
+const apiKey = createReducer(on => {
+  on(keyCheckSuccess, (state, apiKey) => apiKey);
+  on(keyLogout, () => '');
+}, '');
 
-  on(keyCheckSuccess, (state, apiKey) => ({
-    ...state,
-    apiKey,
-    isLoading: false,
-    isApiChecked: true,
-  }));
+const isApiChecked = createReducer(on => {
+  on(keyCheckSuccess, T);
+  on(keyCheckFailure, F);
+  on(keyLogout, F);
+}, false);
 
-  on(keyCheckFailure, state => ({
-    ...state,
-    isLoading: false,
-    isApiChecked: false,
-  }));
-
-  on(keyLogout, state => ({
-    ...state,
-    apiKey: '',
-    isApiChecked: false,
-  }));
-}, initialState);
+export const reducer = combineReducers<IApiReducer>({ isLoading, apiKey, isApiChecked });
