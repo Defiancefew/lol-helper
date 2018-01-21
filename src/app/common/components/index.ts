@@ -6,3 +6,5 @@ export * from './Icon';
 export * from './NoMatch';
 export * from './News';
 export * from './NewsItem';
+export * from './FreeToPlay';
+export * from './Main';

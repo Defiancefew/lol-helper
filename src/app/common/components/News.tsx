@@ -49,21 +49,21 @@ export class News extends React.Component<{}, INewsState> {
         if (resp.status === 200) {
           return parseString(resp.data, (err: any, news: any) => {
             if (err) {
-              this.emitError();
+              this.emitError('Failed to parse downoladed news');
             }
 
             return this.setNews(news);
           });
         }
 
-        return this.emitError();
+        return this.emitError('Failed to load news');
       })
       .catch(err => this.emitError());
   }
 
-  emitError = () =>
+  emitError = (message?: string) =>
     notification.error({
-      message: 'Error - failed to fetch news',
+      message: message || 'Unexpected error',
       description: '',
     });
 
@@ -80,12 +80,14 @@ export class News extends React.Component<{}, INewsState> {
 
     return (
       <div>
-        <h1>Latest news:</h1>
+        <h1>News</h1>
         <NewsContainer>
           {_.map(this.paginate(), (singleStory: INewsItemProps, idx) => <NewsItem key={idx} {...singleStory} />)}
         </NewsContainer>
         <Footer>
-          <Pagination total={news.length} pageSize={pageSize} current={current} onChange={this.onChange} />
+          {!_.isEmpty(news) && (
+            <Pagination total={news.length} pageSize={pageSize} current={current} onChange={this.onChange} />
+          )}
         </Footer>
       </div>
     );
