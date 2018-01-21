@@ -28,10 +28,15 @@ export const fetchLeagueFailure = createAction(`${NS}FETCH LEAGUE FAILURE`, (err
 
 export const clearSearch = createAction(`${NS}CLEAR SEARCH`);
 
-export const fetchSummoner = (id: string, type = 'id', region = 'euw1'): ThunkAction<Promise<Action>, IStore, void> => (
-  dispatch,
-  getState,
-) => {
+export const fetchSummoner = ({
+  id,
+  type = 'id',
+  region = 'euw1',
+}: {
+  id: string;
+  type?: string;
+  region?: string;
+}): ThunkAction<Promise<Action>, IStore, void> => (dispatch, getState) => {
   dispatch(summonerSearchRequest());
 
   return axios({
