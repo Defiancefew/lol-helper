@@ -29,6 +29,10 @@ app.all('/api/**', ({ originalUrl, method, headers, body }, res) => {
     url: `https://${region}.api.riotgames.com/lol${url}`,
   };
 
+  if (isDev) {
+    console.log(headers['x-riot-token']); // tslint:disable-line:no-console
+  }
+
   if (!headers['x-riot-token']) {
     return res.status(401);
   }
@@ -41,7 +45,13 @@ app.all('/api/**', ({ originalUrl, method, headers, body }, res) => {
 
       return res.status(resp.status).send(resp.data);
     })
-    .catch(err => res.status(err.response.status).send({ error: err.response.statusText }));
+    .catch(err => {
+      if (isDev) {
+        console.log(err); // tslint:disable-line:no-console
+      }
+
+      return res.status(err.response.status).send({ error: err.response.statusText });
+    });
 });
 
 app.get('*', (req, res) => {
