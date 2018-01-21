@@ -58,6 +58,13 @@ interface ITimeline {
   damageTakenPerMinDeltas: ICsDiffPerMinDeltas;
 }
 
+export interface IMatchList {
+  startIndex: number;
+  endIndex: number;
+  totalGames: number;
+  matches: IMatch[];
+}
+
 interface IParticipants {
   stats: any;
   spell1Id: number;
