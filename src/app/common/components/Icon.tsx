@@ -21,6 +21,15 @@ const findSpritePath = (type: string, id: string | number) => {
   return `[${type}].data[${id}]`;
 };
 
+const nullDesc = {
+  image: {
+    type: 'item',
+    sprite: 'item2.png',
+    x: '144',
+    y: '192',
+  },
+};
+
 export const chooseDescription = (type: string, spriteData: any): string | JSX.Element => {
   const description = _.get(spriteData, 'description', null);
   const name = _.get(spriteData, 'name', null);
@@ -43,14 +52,6 @@ export const chooseDescription = (type: string, spriteData: any): string | JSX.E
 };
 
 export const Icon: React.SFC<IIconProps> = ({ type, id, onClick }) => {
-  const nullDesc = {
-    image: {
-      type: 'item',
-      sprite: 'item2.png',
-      x: '144',
-      y: '192',
-    },
-  };
   const spriteData = _.get(iconData, findSpritePath(type, id), nullDesc);
   const shouldShowDesc = spriteData !== nullDesc && type !== 'profileicon';
 
@@ -69,7 +70,7 @@ const StyledDescription: any = styled.div.attrs({
   }),
 })`
   display: none;
-  z-index: 9999;
+  z-index: 1;
   padding: 10px;
   background: black;
   color: white;

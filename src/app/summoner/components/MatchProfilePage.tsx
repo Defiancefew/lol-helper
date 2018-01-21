@@ -2,14 +2,15 @@ import React from 'react';
 import { Spin, Button } from 'antd';
 import { connect } from 'react-redux';
 import { IStore, IParticipantIdentities } from 'models';
-import { fetchSingleMatch } from '../actions';
+import { fetchSingleMatch, fetchSummoner } from '../actions';
 import { MatchTableLine } from './';
 import _ from 'lodash';
 import { push } from 'react-router-redux';
 import styled from 'styled-components';
 
 export interface IConnectedDispatch {
-  onFetchSingleMatch: typeof fetchSingleMatch;
+  fetchSingleMatch: typeof fetchSingleMatch;
+  fetchSummoner: typeof fetchSummoner;
   push: typeof push;
   match: any;
 }
@@ -29,8 +30,8 @@ type MatchProfilePageProps = IStore['summoner'] & IConnectedDispatch;
 
 export class MatchProfilePage extends React.Component<MatchProfilePageProps> {
   componentDidMount() {
-    const { onFetchSingleMatch, match: { params } } = this.props;
-    return onFetchSingleMatch(params.matchid);
+    const { fetchSingleMatch, match: { params } } = this.props;
+    return fetchSingleMatch(params.matchid);
   }
 
   onGoBack = () => {
@@ -41,7 +42,7 @@ export class MatchProfilePage extends React.Component<MatchProfilePageProps> {
   };
 
   renderTeams() {
-    const { singleMatch, push } = this.props;
+    const { singleMatch, fetchSummoner } = this.props;
 
     if (!singleMatch) {
       return null;
@@ -56,7 +57,7 @@ export class MatchProfilePage extends React.Component<MatchProfilePageProps> {
       const { stats } = participantIdx;
       const props = {
         // TODO: Decompose this afterwards
-        ..._.pick(player, ['accountId', 'summonerName']),
+        ..._.pick(player, ['accountId', 'summonerName', 'summonerId']),
         ..._.pick(participantIdx, ['spell1Id', 'spell2Id', 'championId']),
         ..._.pick(stats, ['kills', 'deaths', 'assists']),
         items: _.pickBy(stats, (stat, key) => /item\d$/.test(key)),
@@ -73,7 +74,7 @@ export class MatchProfilePage extends React.Component<MatchProfilePageProps> {
       return (
         <div key={idx}>
           <h1>{renderWinner(idx)}</h1>
-          <MatchTableLine push={push} {...props} />
+          <MatchTableLine fetchSummoner={fetchSummoner} {...props} />
         </div>
       );
     });
@@ -105,5 +106,6 @@ export class MatchProfilePage extends React.Component<MatchProfilePageProps> {
 
 export const ConnectedMatchPage = connect(({ summoner }: IStore) => summoner, {
   push,
-  onFetchSingleMatch: fetchSingleMatch,
+  fetchSingleMatch,
+  fetchSummoner,
 })(MatchProfilePage);

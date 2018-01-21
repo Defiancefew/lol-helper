@@ -60,15 +60,15 @@ export class SummonerProfilePage extends React.Component<ISummonerProfilePagePro
       fetchMatchList,
       fetchSummonerLeague,
       match: { params },
-      summonerInfo,
       fetchSummoner,
+      summonerInfo,
       isLoading,
     } = this.props;
 
     const { id, account } = params;
 
-    if (_.isEmpty(summonerInfo) && !isLoading) {
-      _.delay(() => fetchSummoner(id), 500);
+    if (!summonerInfo && !isLoading) {
+      _.delay(() => fetchSummoner({ id }), 500);
     }
 
     fetchSummonerLeague(id);

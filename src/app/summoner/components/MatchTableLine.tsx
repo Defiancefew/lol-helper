@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import styled from 'styled-components';
+import { fetchSummoner } from '../actions';
 import { Icon } from 'common';
 
 const LineContainer = styled.div`
@@ -13,10 +14,6 @@ const LineWrapper = styled.div`
   justify-content: flex-start;
   margin-bottom: 10px;
   flex-flow: row nowrap;
-  &:hover {
-    cursor: pointer;
-    outline: 1px solid black;
-  }
 `;
 
 const StatsBlock = styled.span`
@@ -33,6 +30,7 @@ const IconsWrapper = styled.span`
 export interface IMatchTableLineProps {
   accountId: number;
   championId: number;
+  summonerId: number;
   summonerName: string;
   kills: number;
   deaths: number;
@@ -42,11 +40,11 @@ export interface IMatchTableLineProps {
   items: {
     [key: string]: string;
   };
-  push: any;
+  fetchSummoner: typeof fetchSummoner;
 }
 
 export class MatchTableLine extends React.Component<IMatchTableLineProps> {
-  onClickSummoner = () => this.props.push(`/summoner/${this.props.accountId}`);
+  onClickSummoner = () => this.props.fetchSummoner({ id: this.props.summonerId as any });
 
   render() {
     const { championId, summonerName, spell1Id, spell2Id, items, kills, deaths, assists } = this.props;

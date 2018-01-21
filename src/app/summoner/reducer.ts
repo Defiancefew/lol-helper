@@ -2,7 +2,6 @@ import {
   summonerSearchRequest,
   summonerSearchSuccess,
   summonerSearchFailure,
-  clearSearch,
   fetchMatchListRequest,
   fetchMatchListSuccess,
   fetchMatchListFailure,
@@ -14,102 +13,56 @@ import {
   fetchLeagueFailure,
 } from './actions';
 import { createReducer } from 'redux-act';
-import { ISummonerInfo, IMatch, ISingleMatch, ISummonerLeague } from 'models';
-import _ from 'lodash';
-
-interface IMatchList {
-  startIndex: number;
-  endIndex: number;
-  totalGames: number;
-  matches: IMatch[];
-}
+import { ISummonerInfo, IMatchList, ISingleMatch, ISummonerLeague } from 'models';
+import { combineReducers } from 'redux';
+import { F, T } from 'lodash/fp';
 
 export interface ISummonerReducerState {
   isLoading: boolean;
   summonerInfo: ISummonerInfo | null;
-  searchHistory: ISummonerInfo[];
   matchList: IMatchList | null;
   singleMatch: ISingleMatch | null;
   summonerLeague: ISummonerLeague[] | null;
 }
 
-export const initialState: ISummonerReducerState = {
-  isLoading: false,
-  summonerInfo: null,
-  matchList: null,
-  singleMatch: null,
-  searchHistory: [],
-  summonerLeague: null,
-};
+const isLoading = createReducer<boolean>(on => {
+  on(summonerSearchRequest, T);
+  on(summonerSearchSuccess, F);
+  on(summonerSearchFailure, F);
 
-export const reducer = createReducer<ISummonerReducerState>(on => {
-  on(summonerSearchRequest, state => ({
-    ...state,
-    isLoading: true,
-  }));
+  on(fetchMatchListRequest, T);
+  on(fetchMatchListSuccess, F);
+  on(fetchMatchListFailure, F);
 
-  on(summonerSearchSuccess, (state, summonerInfo: ISummonerInfo) => ({
-    ...state,
-    summonerInfo,
-    isLoading: false,
-    searchHistory: _.uniqBy([...state.searchHistory, summonerInfo], 'id'),
-  }));
+  on(fetchSingleMatchRequest, T);
+  on(fetchSingleMatchSuccess, F);
+  on(fetchSingleMatchFailure, F);
 
-  on(summonerSearchFailure, state => ({
-    ...state,
-    isLoading: false,
-  }));
+  on(fetchLeagueRequest, T);
+  on(fetchLeagueSuccess, F);
+  on(fetchLeagueFailure, F);
+}, false);
 
-  on(fetchMatchListRequest, state => ({
-    ...state,
-    isLoading: true,
-  }));
+const summonerInfo = createReducer<ISummonerInfo | null>(on => {
+  on(summonerSearchSuccess, (state, summonerInfo: ISummonerInfo) => summonerInfo);
+}, null);
 
-  on(fetchMatchListSuccess, (state, matchList: IMatchList) => ({
-    ...state,
-    matchList,
-    isLoading: false,
-  }));
+const matchList = createReducer<IMatchList | null>(on => {
+  on(fetchMatchListSuccess, (state, matchList: IMatchList) => matchList);
+}, null);
 
-  on(fetchMatchListFailure, state => ({
-    ...state,
-    isLoading: false,
-  }));
+const singleMatch = createReducer<ISingleMatch | null>(on => {
+  on(fetchSingleMatchSuccess, (state, singleMatch: ISingleMatch) => singleMatch);
+}, null);
 
-  on(fetchSingleMatchRequest, state => ({
-    ...state,
-    isLoading: true,
-  }));
+const summonerLeague = createReducer<ISummonerLeague | null>(on => {
+  on(fetchLeagueSuccess, (state, summonerLeague: ISummonerLeague) => summonerLeague);
+}, null);
 
-  on(fetchSingleMatchSuccess, (state, singleMatch: ISingleMatch) => ({
-    ...state,
-    singleMatch,
-    isLoading: false,
-  }));
-
-  on(fetchSingleMatchFailure, state => ({
-    ...state,
-    isLoading: false,
-  }));
-
-  on(fetchLeagueRequest, state => ({
-    ...state,
-    isLoading: true,
-  }));
-
-  on(fetchLeagueSuccess, (state, summonerLeague: ISummonerLeague[]) => ({
-    ...state,
-    summonerLeague,
-    isLoading: false,
-  }));
-
-  on(fetchLeagueFailure, state => ({
-    ...state,
-    isLoading: false,
-  }));
-
-  on(clearSearch, state => ({
-    ...state,
-    searchHistory: [],
-  }));
-}, initialState);
+export const reducer = combineReducers<ISummonerReducerState>({
+  summonerInfo,
+  matchList,
+  singleMatch,
+  summonerLeague,
+  isLoading,
+});
